@@ -29,6 +29,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @OneToMany(mappedBy = "user")
+    private Set<Question> questions = new HashSet<>();
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
