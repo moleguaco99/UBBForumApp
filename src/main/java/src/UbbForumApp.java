@@ -111,9 +111,7 @@ public class UbbForumApp implements InitializingBean, CommandLineRunner {
     @Autowired
     private SubjectTeacherRepository subjectTeacherRepository;
 
-    //CALL IT ONLY ONCE !!!
-    @Override
-    public void run(String... args) throws Exception {
+    private void setupTeacher() {
         Subject subjectIstvan = new Subject("Fundamentele programarii", "", 1, "Informatica Romana", "romana", "Obligatorie");
         Teacher istvan = new Teacher("Czibula", "Istvan", "istvanc@cs.ubbcluj.ro", "http://www.cs.ubbcluj.ro/~istvanc", "http://www.cs.ubbcluj.ro/wp-content/uploads/Czibula-Istvan.jpg");
         teacherRepository.save(istvan);
@@ -128,6 +126,11 @@ public class UbbForumApp implements InitializingBean, CommandLineRunner {
         subjectRepository.save(subjectBufny1);
         subjectTeacherRepository.save(new SubjectTeacher(bufny, subjectBufny));
         subjectTeacherRepository.save(new SubjectTeacher(bufny, subjectBufny1));
+    }
 
+    //CALL IT ONLY ONCE !!!
+    @Override
+    public void run(String... args) throws Exception {
+        //setupTeacher();
     }
 }
