@@ -8,31 +8,31 @@ import appConfig from 'app/config/constants';
 
 export const BrandIcon = props => (
   <div {...props} className="brand-icon">
-    <img src="content/images/logo-jhipster.png" alt="Logo" />
+     <img src="content/images/logo-app.png" alt="Logo" />
   </div>
 );
 
 export const Brand = props => (
   <NavbarBrand tag={Link} to="/" className="brand-logo">
     <BrandIcon />
-    <span className="brand-title">UBBForumApp</span>
+    <span style={{fontStyle: "italic", color:"#1F305E"}} className="brand-title">UBBForumApp</span>
   </NavbarBrand>
 );
 
 export const Home = props => (
   <NavItem>
-    <NavLink tag={Link} to="/" className="d-flex align-items-center">
-      <FontAwesomeIcon icon="home" />
-      <span>Home</span>
+    <NavLink tag={Link} to="/" style={{fontStyle: "italic", color:"#1F305E"}} className="d-flex align-items-center">
+      <FontAwesomeIcon icon="home" style={{fontStyle: "italic", color:"#1F305E"}}/>
+      <span style={{fontStyle: "italic", color:"#1F305E"}}>Home</span>
     </NavLink>
   </NavItem>
 );
 
 export const Teacher = props => (
   <NavItem>
-    <NavLink tag={Link} to="/teachers" className="d-flex align-items-center">
-        {/*<FontAwesomeIcon icon="chalkboard-teacher" />*/}
-        <span>Teachers</span>
+    <NavLink tag={Link} to="/teachers" style={{fontStyle: "italic", color:"#1F305E"}} className="d-flex align-items-center">
+        <FontAwesomeIcon style={{fontStyle: "italic", color:"#1F305E"}} icon="book" />
+        <span style={{fontStyle: "italic", color:"#1F305E"}}>Teachers</span>
     </NavLink>
   </NavItem>
 );

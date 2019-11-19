@@ -32,7 +32,7 @@ export default function TeacherCard() {
             Professor
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            Something about the teacher...Idk
+            Details about the teacher.
           </Typography>
         </CardContent>
       </CardActionArea>

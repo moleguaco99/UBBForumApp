@@ -18,6 +18,7 @@ import ErrorBoundary from 'app/shared/error/error-boundary';
 import { AUTHORITIES } from 'app/config/constants';
 import AppRoutes from 'app/routes';
 import {TeachersPage} from "app/components/teachers/TeachersPage";
+import {ForumPage} from "app/components/forum/ForumPage";
 
 const baseHref = document
   .querySelector('base')
