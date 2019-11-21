@@ -8,7 +8,8 @@ import appConfig from 'app/config/constants';
 
 export const BrandIcon = props => (
   <div {...props} className="brand-icon">
-    <img src="content/images/logo-jhipster.png" alt="Logo" />
+    {/*<img src="content/images/logo-jhipster.png" alt="Logo" />*/}
+    <h4 style={{border:"1px solid"}}>Ilarion Logo   </h4>
   </div>
 );
 
@@ -31,7 +32,7 @@ export const Home = props => (
 export const Teacher = props => (
   <NavItem>
     <NavLink tag={Link} to="/teachers" className="d-flex align-items-center">
-        {/*<FontAwesomeIcon icon="chalkboard-teacher" />*/}
+        <FontAwesomeIcon icon="book" />
         <span>Teachers</span>
     </NavLink>
   </NavItem>
