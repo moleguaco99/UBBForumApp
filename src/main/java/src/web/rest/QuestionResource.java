@@ -13,11 +13,14 @@ import src.repository.UserRepository;
 import src.service.QuestionService;
 import src.service.TagQuestionService;
 import src.service.TagService;
+import src.service.dto.FilterDTO;
 import src.service.dto.QuestionDTO;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/ourApi")
@@ -69,5 +72,26 @@ public class QuestionResource {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(question.getIdQuestion(), HttpStatus.OK);
+    }
+
+    @PostMapping("/questions/filter")
+    @Transactional
+    public ResponseEntity<List<Question>> filterQuestions(@RequestBody FilterDTO filterDTO) {
+        List<String> filters = filterDTO.filters;
+        List<Question> questions = questionService.findAllQuestions();
+
+        List<Question> result = new ArrayList<>();
+
+        boolean contains;
+        for (Question question : questions) {
+            List<String> tags = tagQuestionService.findAllTagsNameForQuestion(question);
+            contains = filters.stream().allMatch(element -> tags.contains(element));
+
+            if(contains) {
+                result.add(question);
+            }
+
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
