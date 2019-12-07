@@ -23,6 +23,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/ourApi")
 public class QuestionResource {
 
@@ -90,7 +91,6 @@ public class QuestionResource {
             if(contains) {
                 result.add(question);
             }
-
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
