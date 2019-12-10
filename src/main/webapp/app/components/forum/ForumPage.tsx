@@ -7,6 +7,15 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import { Questions } from './Questions';
   
+const semesters = [
+    { value:1 },
+    { value:2 },
+    { value:3 },
+    { value:4 },
+    { value:5 },
+    { value:6 }
+]
+
 const specializations = [
     { value:"Informatics" },
     { value:"Mathematics & Informatics" },
@@ -117,11 +126,17 @@ export class ForumPage extends Component<any, ForumState>{
             <h2 style={{marginTop: "2%", fontWeight: "bold", color:"#1F305E", fontStyle: "italic", textShadow: "2px 2px #DCDCDC"}}>Welcome to our questions page!</h2>
             <div style={{display:"flex", marginLeft:"3%"}}>
                 <div>
-                    <TextField 
+                    <TextField id="standard-select-currency" select
                         style={{ marginLeft: "theme.spacing(1)", marginRight: "theme.spacing(1)", width: 100}}
                         value={this.state.semester} onChange={this.handleChangeSemester}
                         label="Semester"
-                        margin="normal" />
+                        margin="normal">
+                    {semesters.map(option => (
+                        <MenuItem key={option.value} value={option.value}>
+                            {option.value}
+                        </MenuItem>
+                    ))}
+                    </TextField>
                 </div>
                 <div>
                     <TextField id="standard-select-currency" select label="Select specialization"
@@ -157,7 +172,7 @@ export class ForumPage extends Component<any, ForumState>{
                     <this.tagsList></this.tagsList>
                 </div>
             </div>
-            <Questions semester={this.state.semester} specialization={this.state.searchSpecialization} tags={this.state.searchTags} language={this.state.searchLanguage}/>                
+            <Questions semester={this.state.searchSemester} specialization={this.state.searchSpecialization} tags={this.state.searchTags} language={this.state.searchLanguage}/>                
         </div>
     )};
 }

@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import Card from '@material-ui/core/Card';
-import { CardContent, CardMedia } from '@material-ui/core';
+import { CardContent } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
-import { display } from '@material-ui/system';
 import Button from '@material-ui/core/Button';
+import { Redirect, Link } from 'react-router-dom'
+import { threadId } from 'worker_threads';
 
 export class Questions extends Component<any, any>{
     intervals = [];
@@ -11,12 +12,13 @@ export class Questions extends Component<any, any>{
         super(props);
         this.state = {
             questions:[],
-            questionText: ""
+            questionText: "",
+            redirect: false,
+            highlightedQuestion: ""
         }
     }
     
     componentDidMount(){
-        /* eslint-disable no-console */
         fetch('http://localhost:8080/ourApi/questions/')
             .then(response=> response.json())
             .then(json => {
@@ -26,9 +28,25 @@ export class Questions extends Component<any, any>{
             })
         /* eslint-disable no-console */
         .catch((error) => console.log(error))
+
+        this.intervals.forEach(clearInterval);
+        this.intervals.push(setInterval(this.getQuestions, 2000));  
     }
 
-    getQuestions = (tags) =>{
+    getQuestions = () => {
+        fetch('http://localhost:8080/ourApi/questions/')
+            .then(response=> response.json())
+            .then(json => {
+                this.setState({
+                    questions: json
+                })
+            })
+        /* eslint-disable no-console */
+        .catch((error) => console.log(error))
+
+    }
+
+    getFilteredQuestions = (tags) =>{
         fetch('http://localhost:8080/ourApi/questions/filter', {
             method: 'POST',
             headers: {
@@ -47,7 +65,7 @@ export class Questions extends Component<any, any>{
             })
         /* eslint-disable no-console */
         .catch((error) => console.log(error))
-   }
+    }
 
     componentWillReceiveProps(nextProps){
         if(nextProps.semester !== this.props.semester ||  nextProps.specialization !== this.props.specialization ||
@@ -60,21 +78,20 @@ export class Questions extends Component<any, any>{
                                                 if(item !== "")
                                                 tags.push(item); }) : null
                 
-                this.getQuestions(tags);
+                this.getFilteredQuestions(tags);
                 this.intervals.forEach(clearInterval);
-                this.intervals.push(setInterval(this.getQuestions, 2000, tags));
-                
+                this.intervals.push(setInterval(this.getFilteredQuestions, 2000, tags));   
         }
     }
 
     askQuestion = (event) =>{
-        const tagsa = []
-        this.props.semester !== "" ? tagsa.push(this.props.semester) : null;
-        this.props.specialization !== "" ? tagsa.push(this.props.specialization) : null;
-        this.props.language !== "" ? tagsa.push(this.props.language) : null;
+        const newTags = []
+        this.props.semester !== "" ? newTags.push(this.props.semester) : null;
+        this.props.specialization !== "" ? newTags.push(this.props.specialization) : null;
+        this.props.language !== "" ? newTags.push(this.props.language) : null;
         this.props.tags !== "" ? new Set(this.props.tags.split(",")).forEach(item => {
                                                 if(item !== "")
-                                                tagsa.push(item); }) : null
+                                                newTags.push(item); }) : null
 
         fetch('http://localhost:8080/ourApi/question', {
             method:'POST',
@@ -85,14 +102,13 @@ export class Questions extends Component<any, any>{
             body: JSON.stringify({
                 text: this.state.questionText,
                 idUser: 4,
-                tags: tagsa,
+                tags: newTags,
             })
         }).catch((error) => {console.log(error)})
         this.setState({
             questionText: ""
         })
     }
-
 
     handleQuestionText = (event) => {
         this.setState({
@@ -102,12 +118,19 @@ export class Questions extends Component<any, any>{
 
     render(){
         return(
-            <div style={{ height:"60vh", width:"85%", marginTop:"2%", marginLeft:"3%", border:"1px solid #F8F8FF", boxShadow:"0px 0px 1px black"}}>
+            <div>
+            { this.state.redirect ?  <Redirect to={{ pathname:'/topic', state:{ from : this.state.highlightedQuestion} }} /> : null}
+            <div style={{height:"50vh", width:"85%", marginTop:"2%", marginLeft:"3%", border:"1px solid #F8F8FF", boxShadow:"0px 0px 1px black", overflow: 'auto'}}>
                 {this.state.questions.map(question => (
                     <div key={question.text}>
                         <div style={{display:"flex"}}>
-                            <img src={question.userP.imageUrl} style={{height:"50px", marginTop:"2%", alignSelf:"center", marginLeft:"3%", borderRadius:"50%" }}></img>
-                            <Card style={{height:"45px", width:"80%", marginLeft:"1%", marginTop:"2%",  textAlign:"justify", display:"flex", backgroundColor:"#59C3C3", boxShadow:"0px 2px 2px #C6DBF0", color:"white"}}>
+                            {question.userP.imageUrl !== null ? 
+                                <img src={question.userP.imageUrl} style={{height:"50px", marginTop:"1%", alignSelf:"center", marginLeft:"3%", borderRadius:"50%" }}></img> 
+                                :
+                                <img src="content\images\user-icon.png" style={{height:"50px", marginTop:"1%", alignSelf:"center", marginLeft:"3%", borderRadius:"50%", border:"1px solid #D8D8D8"  }}></img>
+                            }
+                            <Card onClick={() => {this.setState({redirect: true, highlightedQuestion: question})}} 
+                                style={{height:"45px", width:"80%", marginLeft:"1%", marginTop:"1%",  textAlign:"justify", display:"flex", backgroundColor:"#59C3C3", boxShadow:"0px 2px 2px #C6DBF0", color:"white"}}>
                                 <CardContent>
                                     {question.text}
                                 </CardContent>
@@ -116,10 +139,11 @@ export class Questions extends Component<any, any>{
                             <p style={{marginLeft:'60%', fontStyle:'italic', fontSize:'5', color:'grey'}}>posted by {question.userP.firstName + " " + question.userP.lastName} on {question.timestamp} </p>
                     </div>
                 ))} 
-                <div style={{position:'absolute', bottom:'0px', marginLeft:'2%', width:'85%', display:'flex'}}>
-                    <TextField style={{marginBottom:'2%', width:'85%'}} label="Ask a question" variant="outlined" onChange={this.handleQuestionText} value={this.state.questionText} />
-                    <Button variant="contained" size="small" style={{scale:'0.5', marginLeft:'1%', height:'50px', backgroundColor:'#59C3C3', color:'white', marginRight:'5%'}} onClick={this.askQuestion}> Post question </Button>
-                </div>          
+            </div>
+                <div style={{position:'relative', marginTop:'1%', marginLeft:'3%', width:'85%', display:'flex'}}>
+                    <TextField style={{ width:'85%'}} label="Ask a question" variant="outlined" onChange={this.handleQuestionText} value={this.state.questionText} />
+                    <Button variant="contained" size="small" style={{scale:'0.5', marginLeft:'1%', height:'50px', backgroundColor:'#1F75FE', color:'white'}} onClick={this.askQuestion}> Post question </Button>
+                </div>       
             </div>
         );
     }

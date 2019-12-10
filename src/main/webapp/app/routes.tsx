@@ -17,6 +17,7 @@ import { AUTHORITIES } from 'app/config/constants';
 import {Teacher} from "app/shared/layout/header/header-components";
 import {TeachersPage} from "app/components/teachers/TeachersPage";
 import {ForumPage} from "app/components/forum/ForumPage";
+import {TopicPage} from "app/components/forum/TopicPage"
 
 const Account = Loadable({
   loader: () => import(/* webpackChunkName: "account" */ 'app/modules/account'),
@@ -43,6 +44,7 @@ const Routes = () => (
       <ErrorBoundaryRoute path="/" exact component={Home} />
       <ErrorBoundaryRoute path="/teachers" component={TeachersPage} />
       <ErrorBoundaryRoute path="/forum" component={ForumPage} />
+      <ErrorBoundaryRoute path="/topic" component={TopicPage} />
       <ErrorBoundaryRoute component={PageNotFound} />
     </Switch>
   </div>
