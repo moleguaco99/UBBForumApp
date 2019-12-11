@@ -19,4 +19,9 @@ public class AnswerService {
     public List<Answer> getAnswersForQuestion(long questionId){
         return answerRepository.findAll().stream().filter(a -> a.getIdQuestionOrAnswer()==questionId).collect(Collectors.toList());
     }
+
+    public void save(Answer a){
+        answerRepository.save(a);
+        answerRepository.flush();
+    }
 }
