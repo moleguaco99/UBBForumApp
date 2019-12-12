@@ -32,7 +32,7 @@ public class SubjectResource {
             List<Teacher> teachers = subjectService.findAllTeachersForSubject(idSubject);
             return new ResponseEntity<>(teachers, HttpStatus.OK);
         } catch (RuntimeException e) {
-            return new ResponseEntity<>(null, HttpStatus.OK);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 }
