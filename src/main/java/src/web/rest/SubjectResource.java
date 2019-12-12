@@ -27,7 +27,8 @@ public class SubjectResource {
     }
 
     @GetMapping("/subject/{idS}/teachers")
-    public ResponseEntity<List<Teacher>> findAllTeachers(@Param("idS") Long idSubject) {
+    public ResponseEntity<List<Teacher>> findAllTeachers(@PathVariable("idS") Long idSubject) {
+        System.out.println(idSubject);
         try {
             List<Teacher> teachers = subjectService.findAllTeachersForSubject(idSubject);
             return new ResponseEntity<>(teachers, HttpStatus.OK);
