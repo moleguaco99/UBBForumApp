@@ -128,10 +128,14 @@ export class Questions extends Component<any, any>{
         }
     }
 
+    componentWillUnmount(){
+        this.intervals.forEach(clearInterval);
+    }
+
     render(){
         return(
             <div>
-            { this.state.redirect ?  <Redirect push to={{ pathname:'/topic', state:{ from : this.state.highlightedQuestion} }} /> : null}
+            {this.state.redirect ?  <Redirect push to={{ pathname:'/topic', state:{ from : this.state.highlightedQuestion} }} /> : null}
             <div style={{height:"50vh", width:"85%", marginTop:"2%", marginLeft:"3%", border:"1px solid #F8F8FF", boxShadow:"0px 0px 1px black", overflow: 'auto'}}>
                 {this.state.questions.map(question => (
                     <div key={question.text}>

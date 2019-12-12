@@ -30,9 +30,9 @@ public class AnswerResource {
     public AnswerResource(){
     }
 
-    @GetMapping("/answers")
-    public ResponseEntity<List<Answer>> getAnswersToQuestion(@RequestBody long questionId){
-        return new ResponseEntity<>(answerService.getAnswersForQuestion(questionId), HttpStatus.OK);
+    @GetMapping("/answers/{id}")
+    public ResponseEntity<List<Answer>> getAnswersToQuestion(@PathVariable long id){
+        return new ResponseEntity<>(answerService.getAnswersForQuestion(id), HttpStatus.OK);
     }
 
     @PostMapping("/answer")
