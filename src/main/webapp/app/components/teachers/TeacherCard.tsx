@@ -7,24 +7,17 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import "../teachers/cardStyle.css"
 
-const useStyles = makeStyles({
-  card: {
-    maxWidth: 600,
-    marginBottom: 20,
-    marginLeft:"auto",
-    marginRight:"auto"
-  },
-  image: {
-    marginLeft:"-390px",
-  },
-});
+export default class TeacherCard extends React.Component{
+  constructor(props){
+    super(props);
+    this.state={}
+  }
 
-export default function TeacherCard() {
-  const classes = useStyles();
-
+  render(){
   return (
-    <Card className={classes.card}>
+    <Card className="card">
       <CardActionArea>
         <img src={"http://www.cs.ubbcluj.ro/wp-content/uploads/Czibula-Istvan.jpg"} style={{marginLeft:"-400px"}}/>
         <CardContent>
@@ -42,5 +35,6 @@ export default function TeacherCard() {
         </Button>
       </CardActions>
     </Card>
-  );
+  )
+}
 }
