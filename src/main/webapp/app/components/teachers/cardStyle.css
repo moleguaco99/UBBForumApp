@@ -1,7 +1,10 @@
 .card {
   max-width: 600;
   margin-bottom: 20;
-  margin: auto;
+  margin-bottom: 2%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0px;
 }
 
 .image {
