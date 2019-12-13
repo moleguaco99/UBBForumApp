@@ -2,6 +2,11 @@ import React from 'react';
 import Card from '@material-ui/core/Card';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import { CardContent } from '@material-ui/core';
 import axios from 'axios';
 
@@ -13,7 +18,8 @@ export class TopicPage extends React.Component<any, any>{
             replies:[],
             replyText: "",
             userID: 0,
-            topicQuestion: this.props.location.state.from
+            topicQuestion: this.props.location.state.from,
+            open: false
         }
     }
 
@@ -60,24 +66,31 @@ export class TopicPage extends React.Component<any, any>{
     }
 
     replyTopic = () => {
-        fetch('http://localhost:8080/ourApi/answer/', {
-            method: 'POST',
-            headers:{
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                idUser: this.state.userID,
-                idQA: this.state.topicQuestion.idQuestion,
-                rating: 0,
-                text: this.state.replyText,
-                type: 'Q'
+        if(this.state.replyText === ""){
+            this.setState({
+                open: true
             })
-        }).catch(error => console.log(error))
+        }
+        else{
+            fetch('http://localhost:8080/ourApi/answer/', {
+                method: 'POST',
+                headers:{
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    idUser: this.state.userID,
+                    idQA: this.state.topicQuestion.idQuestion,
+                    rating: 0,
+                    text: this.state.replyText,
+                    type: 'Q'
+                 })
+                }).catch(error => console.log(error))
 
-        this.setState({ 
-            replyText: ""
-        })
+                this.setState({ 
+                    replyText: ""
+            })
+        }
     }
 
     pressEnter = (event : React.KeyboardEvent<HTMLInputElement>) => {
@@ -86,9 +99,28 @@ export class TopicPage extends React.Component<any, any>{
         }
     }
 
+    handleClose = () =>{
+        this.setState({
+            open: false
+        })
+    }
+
     render(){
         return(
             <div style={{overflow:'auto'}}>
+                <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+                <DialogTitle style={{fontSize:"30px", fontWeight:"bolder", color:"black", alignContent:"center"}}>{"Please write an answer!"}</DialogTitle>
+                    <DialogContent>
+                    <DialogContentText style={{fontSize:"13px"}}>
+                            Your answer cannot be blank!
+                    </DialogContentText>
+                    </DialogContent>
+                <DialogActions>
+                <Button onClick={this.handleClose} color="primary">
+                    Ok
+                </Button>
+                </DialogActions>
+                </Dialog>
                 <div style={{display:'flex'}}>
                     {this.getIcon(this.state.topicQuestion.userP.imageUrl, "3%")}
                     <Card style={{height:"45px", width:"80%", marginLeft:"1%", marginTop:"1%",  textAlign:"justify", display:"flex", backgroundColor:"#59C3C3", boxShadow:"0px 2px 2px #C6DBF0", color:"white"}}>
