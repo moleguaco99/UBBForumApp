@@ -1,5 +1,7 @@
 package src;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import src.config.ApplicationProperties;
 import src.config.DefaultProfileUtil;
 
@@ -14,6 +16,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.env.Environment;
+import src.domain.Subject;
+import src.domain.SubjectTeacher;
+import src.domain.Teacher;
+import src.repository.SubjectRepository;
+import src.repository.SubjectTeacherRepository;
+import src.repository.TeacherRepository;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -22,7 +30,7 @@ import java.util.Collection;
 
 @SpringBootApplication
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
-public class UbbForumApp implements InitializingBean {
+public class UbbForumApp implements InitializingBean, CommandLineRunner {
 
     private static final Logger log = LoggerFactory.getLogger(UbbForumApp.class);
 
@@ -94,5 +102,35 @@ public class UbbForumApp implements InitializingBean {
             serverPort,
             contextPath,
             env.getActiveProfiles());
+    }
+
+    @Autowired
+    private TeacherRepository teacherRepository;
+    @Autowired
+    private SubjectRepository subjectRepository;
+    @Autowired
+    private SubjectTeacherRepository subjectTeacherRepository;
+
+    private void setupTeacher() {
+        Subject subjectIstvan = new Subject("Fundamentele programarii", "", 1, "Informatica Romana", "romana", "Obligatorie");
+        Teacher istvan = new Teacher("Czibula", "Istvan", "istvanc@cs.ubbcluj.ro", "http://www.cs.ubbcluj.ro/~istvanc", "http://www.cs.ubbcluj.ro/wp-content/uploads/Czibula-Istvan.jpg");
+        teacherRepository.save(istvan);
+        subjectRepository.save(subjectIstvan);
+        subjectTeacherRepository.save(new SubjectTeacher(istvan, subjectIstvan));
+
+        Subject subjectBufny = new Subject("Retele de calculatoare", "", 3, "Informatica Romana", "romana", "Obligatorie");
+        Subject subjectBufny1 = new Subject("Programare web", "", 4, "Informatica Romana", "romana", "Obligatorie");
+        Teacher bufny = new Teacher("Bufnea", "Darius", "bufny@cs.ubbcluj.ro", "http://www.cs.ubbcluj.ro/~bufny", "http://www.cs.ubbcluj.ro/wp-content/uploads/Bufnea-Darius.jpg");
+        teacherRepository.save(bufny);
+        subjectRepository.save(subjectBufny);
+        subjectRepository.save(subjectBufny1);
+        subjectTeacherRepository.save(new SubjectTeacher(bufny, subjectBufny));
+        subjectTeacherRepository.save(new SubjectTeacher(bufny, subjectBufny1));
+    }
+
+    //CALL IT ONLY ONCE !!!
+    @Override
+    public void run(String... args) throws Exception {
+        //setupTeacher();
     }
 }

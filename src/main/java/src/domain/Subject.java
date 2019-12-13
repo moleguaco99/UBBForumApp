@@ -35,6 +35,15 @@ public class Subject {
     @OneToMany(mappedBy = "subject")
     private Set<SubjectTeacher> subjectTeachers = new HashSet<>();
 
+    public Subject(String title, String description, Integer semester, String section, String language, String type) {
+        this.title = title;
+        this.description = description;
+        this.semester = semester;
+        this.section = section;
+        this.language = language;
+        this.type = type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

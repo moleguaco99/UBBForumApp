@@ -19,6 +19,11 @@ public class SubjectTeacher {
     @JoinColumn(name = "subject")
     Subject subject;
 
+    public SubjectTeacher(Teacher teacher, Subject subject) {
+        this.teacher = teacher;
+        this.subject = subject;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

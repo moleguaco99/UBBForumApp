@@ -8,7 +8,7 @@ const Footer = props => (
   <div className="footer page-content">
     <Row>
       <Col md="12">
-        <p>UBBForum 2019</p>
+          <h6 style={{fontStyle:"italic"}}>©Copyright 2019 <img src="content/images/copyright-logo.png" className="copyright-logo"/> GForce UBBForum</h6>
       </Col>
     </Row>
   </div>
