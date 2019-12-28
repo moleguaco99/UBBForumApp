@@ -39,4 +39,20 @@ public class VoteAnswer {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public User getUserV() {
+        return userV;
+    }
+
+    public void setUserV(User userV) {
+        this.userV = userV;
+    }
+
+    public Answer getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(Answer answer) {
+        this.answer = answer;
+    }
 }

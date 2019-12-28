@@ -1,0 +1,18 @@
+.mentionuser:hover {
+  opacity: 1;
+  background-color: #0d5c63;
+  color: white;
+  transition: 0.5s;
+}
+
+.questioncard {
+  height: 45px;
+  width: 80%;
+  margin-left: 1%;
+  margin-top: 3%;
+  text-align: justify;
+  display: flex;
+  background-color: #59c3c3;
+  box-shadow: 0px 2px 2px #c6dbf0;
+  color: white;
+}

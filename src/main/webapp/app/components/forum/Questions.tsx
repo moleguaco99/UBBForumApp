@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Card from '@material-ui/core/Card';
-import { CardContent } from '@material-ui/core';
+import { CardContent, Icon } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Redirect, Link } from 'react-router-dom';
@@ -73,6 +73,34 @@ export class Questions extends Component<any, any>{
         .catch((error) => console.log(error))
     }
 
+    createText(){
+        let info = "";
+        if(this.props.semester !== "")
+            info = info + ("semester: ") + this.props.semester +", ";
+        
+        if(this.props.specialization !== "")
+            info = info + this.props.specialization +", ";
+        
+        
+        if(this.props.language !== "")
+            info = info + this.props.language +" ";
+
+        if(this.props.tags !== ""){
+            new Set(this.props.tags.split(",")).forEach(item => {
+                if(item !== "")
+                    info += item + ", ";
+            })
+        }
+
+        if(info.endsWith(", "))
+            info = info.slice(0, info.length-2)
+        
+        if(this.props.semester === "" && this.props.specialization === ""
+            && this.props.language === "" && this.props.tags === "")
+            return "all the questions!";
+        return info+"!";    
+    }
+
     componentWillReceiveProps(nextProps){
         if(nextProps.semester !== this.props.semester ||  nextProps.specialization !== this.props.specialization ||
            nextProps.language !== this.props.language ||  nextProps.tags !== this.props.tags){
@@ -136,7 +164,8 @@ export class Questions extends Component<any, any>{
         return(
             <div>
             {this.state.redirect ?  <Redirect push to={{ pathname:'/topic', state:{ from : this.state.highlightedQuestion} }} /> : null}
-            <div style={{height:"50vh", width:"85%", marginTop:"2%", marginLeft:"3%", border:"1px solid #F8F8FF", boxShadow:"0px 0px 1px black", overflow: 'auto'}}>
+            <div style={{height:"52vh", width:"85%", marginTop:"2%", marginLeft:"3%", border:"1px solid #F8F8FF", boxShadow:"0px 0px 1px black", overflow: 'auto'}}>
+                <h5 style={{marginTop: "2%", marginLeft:"3%", fontWeight: "bold", color:"#1F305E", fontStyle: "italic", textShadow: "2px 2px #DCDCDC"}}>You searched for {this.createText()} </h5>
                 {this.state.questions.map(question => (
                     <div key={question.text}>
                         <div style={{display:"flex"}}>
@@ -156,7 +185,7 @@ export class Questions extends Component<any, any>{
                                 </CardContent>
                             </Card>
                         </div>
-                            <p style={{marginLeft:'60%', fontStyle:'italic', fontSize:'5', color:'grey'}}>posted by {question.userP.firstName + " " + question.userP.lastName} on {question.timestamp} </p>
+                            <p style={{marginLeft:'60%', fontStyle:'italic', fontSize:'5', color:'grey'}}> posted by {question.userP.firstName + " " + question.userP.lastName} on {question.timestamp} </p>
                     </div>
                 ))} 
             </div>

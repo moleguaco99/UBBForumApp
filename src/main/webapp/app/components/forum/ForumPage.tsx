@@ -164,7 +164,8 @@ export class ForumPage extends Component<any, ForumState>{
                 </div>
                 <div style={{marginTop:"1.5%"}}>
                     <Paper style={{width:250, display:"flex", marginLeft:"15%"}}>
-                        <InputBase style={{marginLeft:"10px"}} placeholder="Add tags for searching" onChange={event => {this.changeTags(event)}} inputProps={{ 'aria-label': 'search by tags' }} value={this.state.tags}/>
+                        <InputBase style={{marginLeft:"10px"}} placeholder="Add tags for searching" onChange={event => {this.changeTags(event)}} 
+                                                               inputProps={{ 'aria-label': 'search by tags' }} value={this.state.tags}/>
                         <IconButton onClick={this.searchQuestions} aria-label="search">
                            <SearchIcon />
                         </IconButton>
