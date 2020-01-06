@@ -20,11 +20,14 @@ export class Reply extends React.Component<any, any>{
             replies: [],
             answerForm: false,
             replyText: "",
-            mention: false
+            mention: false,
+            idInterval: 0,
+            notifyUsers: ""
         }
     }
 
     componentDidMount(){
+        
         /* eslint-disable no-console */
         fetch("http://localhost:8080/ourApi/isvoted", {
             method: 'POST',
@@ -48,6 +51,7 @@ export class Reply extends React.Component<any, any>{
         .catch(error => {console.log(error)})
 
         if(this.props.replyA.idAnswer !== null){
+
             fetch("http://localhost:8080/ourApi/replies/" + this.props.replyA.idAnswer)
             .then(response => response.json())
             .then(json => {
@@ -56,12 +60,30 @@ export class Reply extends React.Component<any, any>{
                 })
             })
             .catch(error => console.log(error))
+
+            this.setState({
+                idInterval: setInterval(this.refreshReplies, 2000)
+            })
         }
     }
 
+    refreshReplies = () => {
+
+        fetch("http://localhost:8080/ourApi/replies/" + this.props.replyA.idAnswer)
+        .then(response => response.json())
+        .then(json => {
+            this.setState({
+                replies: json
+            })
+        })
+        .catch(error => console.log(error))
+
+    }
+
     toggleVote = () => {
+        
         this.setState(prevState => {
-            return{
+            return {
                 voted: !prevState.voted
             }
         })
@@ -80,11 +102,12 @@ export class Reply extends React.Component<any, any>{
                 }
             })
         }).catch(error => {console.log(error)})
+
     }
 
     toggleAnswerForm = () =>{
         this.setState(prevState => {
-            return{
+            return {
                 answerForm: !prevState.answerForm
             }
         })
@@ -108,6 +131,7 @@ export class Reply extends React.Component<any, any>{
     }
     
     replyTopic = () => {
+
         fetch('http://localhost:8080/ourApi/answer/', {
             method: 'POST',
             headers:{
@@ -122,15 +146,35 @@ export class Reply extends React.Component<any, any>{
                 type: 'A'
              })
             }).catch(error => console.log(error))
+            
+            const usersList = this.state.notifyUsers.split(";");
+            const taggedUsers = [];
+
+            usersList.forEach(element => {
+                if(this.state.replyText.includes(element) && element !== "")
+                    taggedUsers.push(element);
+            });
+            
+            fetch('http://localhost:8080/ourApi/tagusers/', {
+                method: 'POST',
+                headers:{
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 
+                    users: taggedUsers })
+            }).catch(error => console.log(error))
 
             this.setState({ 
                 replyText: "",
-                answerForm: false
-        })
+                answerForm: false,
+                notifyUsers: ""
+            })
     }
     
 
     triggerMention = (event : React.KeyboardEvent<HTMLInputElement>) => {
+
         if(event.key === "@"){
             this.setState({
                 mention: true
@@ -139,15 +183,20 @@ export class Reply extends React.Component<any, any>{
     }
 
     mention = (msg: string) => {
+
         let val = this.state.replyText.substring(0, this.state.replyText.length-1)
         val += msg;
-        this.setState({
-            replyText: val,
-            mention: false
+        this.setState(prevState => {
+            return {
+                replyText: val,
+                mention: false,
+                notifyUsers: prevState.notifyUsers + msg + ";"
+            }
         })
     }
 
     getIcon(imageUrl:string, marginL:string, marginT:string){
+        
         return imageUrl !== null ? 
            <img src={imageUrl} 
                style={{height:"50px", marginTop: marginT, alignSelf:"center", marginLeft: marginL, borderRadius:"50%"}}></img> :
@@ -155,9 +204,18 @@ export class Reply extends React.Component<any, any>{
                style={{height:"50px", marginTop: marginT, alignSelf:"center", marginLeft: marginL, borderRadius:"50%", border:"1px solid #D8D8D8"}}></img>
     }
 
+    parseDate(date: string){
+        const newDate = date.split("T");
+        return newDate[0] + " " + newDate[1].split(".")[0];
+    }
+
+    componentWillUnmount(){
+        clearInterval(this.state.idInterval);
+    }
+
     render(){
         return(
-            <div>
+            <div>              
                 <div style={{display:"flex", marginLeft:"10%"}}>
                     <Card onClick={this.toggleAnswerForm}
                         style={{height:"45px", width:"80%", marginTop:"1%", marginLeft:"1%", textAlign:"end", backgroundColor:this.props.color, boxShadow:"0px 2px 2px #C6DBF0", color:this.props.textColor}}>
@@ -167,35 +225,47 @@ export class Reply extends React.Component<any, any>{
                     </Card>
                     {this.getIcon(this.props.replyA.userP.imageUrl, "1%", "1%")}
                 </div>
+
                 <div style={{display:"flex"}}>
-                    <p style={{marginLeft:"16%", fontStyle:"italic", fontSize:"5", color:"grey"}}> posted by {this.props.replyA.userP.firstName + " " + this.props.replyA.userP.lastName} on {this.props.replyA.timestamp}  &nbsp; &nbsp; {this.props.replyA.rating} </p>
+                    <p style={{marginLeft:"16%", fontStyle:"italic", fontSize:"5", color:"grey"}}> posted by {this.props.replyA.userP.firstName + " " + this.props.replyA.userP.lastName} on {this.parseDate(this.props.replyA.timestamp)}  &nbsp; &nbsp; {this.props.replyA.rating} </p>
+                    
                     <div style={{marginLeft:"0.5%"}} onClick={this.toggleVote}>
                         <FontAwesomeIcon style={this.state.voted ? {fontStyle: "italic", color:"#1F75FE"} : {fontStyle: "italic", color:"grey"} } icon={faThumbsUp} />
                     </div> 
                 </div>
-                {this.state.answerForm ? 
-                <div style={{marginLeft:"36%"}}> 
-                    <div style={{display:"flex"}}><TextField style={{width:"73%", marginBottom:"1%"}}
-                                label="Give an answer" variant="outlined" onChange={this.handleReplyText} onKeyUp={this.pressEnter} onKeyPress={this.triggerMention} value={this.state.replyText}>
-                    </TextField>
-                    <div  style={{marginLeft:"2%", marginTop:"1%", marginBottom:"1%"}} onClick={this.replyTopic}>
-                        <FontAwesomeIcon style={{ color:"#191970"}} size="2x" icon={ faReply } />
-                    </div></div>
-                    {this.state.mention ? <List style={{ position: "absolute", backgroundColor: "white", zIndex:5 }}>
-                                            {this.props.mentionusers.map(user=>(
-                                                <ListItem style={{opacity:"0.9"}} key={user.idUser} className="mentionuser" onClick={() => this.mention(user.firstName + " " + user.lastName)}>
-                                                    <ListItemAvatar>
-                                                        <Avatar src={user.imageUrl} />
-                                                    </ListItemAvatar>
-                                                    <ListItemText primary={user.firstName + " " + user.lastName}/>
-                                                </ListItem>
-                                            ))}
-                                         </List> : null}
-                </div> : null           
+                
+                {this.state.answerForm ?       
+                    <div style={{marginLeft:"36%"}}> 
+                        <div style={{display:"flex"}}>
+                            <TextField style={{width:"73%", marginBottom:"1%"}}
+                                    label="Reply to answer" variant="outlined" onChange={this.handleReplyText} 
+                                        onKeyUp={this.pressEnter} onKeyPress={this.triggerMention} value={this.state.replyText} />
+                        <div style={{marginLeft:"2%", marginTop:"1%", marginBottom:"1%"}} onClick={this.replyTopic}>
+                            <FontAwesomeIcon style={{ color:"#191970"}} size="2x" icon={ faReply } />
+                        </div>
+                    </div>
+                        
+                    {this.state.mention ? 
+                        <List style={{ position: "absolute", backgroundColor: "white", zIndex:5 }}>
+                            {this.props.mentionusers.map(user=>(
+                                    <ListItem key={user.idUser} className="mentionuser" onClick={() => this.mention(user.firstName + " " + user.lastName)}>
+                                        <ListItemAvatar>
+                                            <Avatar src={user.imageUrl} />
+                                        </ListItemAvatar>
+                                        <ListItemText primary={user.firstName + " " + user.lastName}/>
+                                    </ListItem>
+                            ))}
+                        </List> : null}
+                    </div> : null 
                 }
-                <div style={{width:"85%"}}>
-                    {this.state.replies.map(reply => (<Reply key={reply.idAnswer} replyA={reply} userID={this.props.userID} mentionusers={this.props.mentionusers} color="#360568" textColor="white"></Reply>))}
+
+                <div style={{width:"90%", marginLeft:"8%"}}>
+                    {this.state.replies.map(reply => (
+                                <Reply key={reply.idAnswer} replyA={reply} userID={this.props.userID} 
+                                        mentionusers={this.props.mentionusers} color="#360568" textColor="white"/>
+                    ))}
                 </div>
+
             </div> 
         )
     }

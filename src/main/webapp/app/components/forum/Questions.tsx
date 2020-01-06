@@ -83,7 +83,7 @@ export class Questions extends Component<any, any>{
         
         
         if(this.props.language !== "")
-            info = info + this.props.language +" ";
+            info = info + this.props.language;
 
         if(this.props.tags !== ""){
             new Set(this.props.tags.split(",")).forEach(item => {
@@ -156,6 +156,11 @@ export class Questions extends Component<any, any>{
         }
     }
 
+    parseDate(date: string){
+        const newDate = date.split("T");
+        return newDate[0] + " " + newDate[1].split(".")[0];
+    }
+
     componentWillUnmount(){
         this.intervals.forEach(clearInterval);
     }
@@ -165,33 +170,41 @@ export class Questions extends Component<any, any>{
             <div>
             {this.state.redirect ?  <Redirect push to={{ pathname:'/topic', state:{ from : this.state.highlightedQuestion} }} /> : null}
             <div style={{height:"52vh", width:"85%", marginTop:"2%", marginLeft:"3%", border:"1px solid #F8F8FF", boxShadow:"0px 0px 1px black", overflow: 'auto'}}>
-                <h5 style={{marginTop: "2%", marginLeft:"3%", fontWeight: "bold", color:"#1F305E", fontStyle: "italic", textShadow: "2px 2px #DCDCDC"}}>You searched for {this.createText()} </h5>
-                {this.state.questions.map(question => (
-                    <div key={question.text}>
-                        <div style={{display:"flex"}}>
-                            {question.userP.imageUrl !== null ? 
-                                <img src={question.userP.imageUrl} 
-                                    style={{height:"50px", marginTop:"1%", alignSelf:"center", marginLeft:"3%", borderRadius:"50%" }} /> :
-                                <img src="content\images\user-icon.png"
-                                    style={{height:"50px", marginTop:"1%", alignSelf:"center", marginLeft:"3%", borderRadius:"50%", border:"1px solid #D8D8D8" }} />
-                            }
-                            <Card onClick={() => {this.setState({
-                                            redirect: true,
-                                            highlightedQuestion: question})
+                <h5 style={{marginTop: "2%", marginLeft:"3%", fontWeight: "bold", color:"#1F305E", fontStyle: "italic", textShadow: "2px 2px #DCDCDC"}}>
+                            You searched for {this.createText()} 
+                </h5>
+                {
+                    this.state.questions.map(question => (
+                        <div key={question.text}>
+                            <div style={{display:"flex"}}>
+                                {question.userP.imageUrl !== null ? 
+                                    <img src={question.userP.imageUrl} 
+                                        style={{height:"50px", marginTop:"1%", alignSelf:"center", marginLeft:"3%", borderRadius:"50%" }} /> :
+                                    <img src="content\images\user-icon.png"
+                                        style={{height:"50px", marginTop:"1%", alignSelf:"center", marginLeft:"3%", borderRadius:"50%", border:"1px solid #D8D8D8" }} />
+                                }
+                                <Card onClick={() => {
+                                        this.setState({
+                                                redirect: true,
+                                                highlightedQuestion: question})
                                         }} 
-                                style={{height:"45px", width:"80%", marginLeft:"1%", marginTop:"1%",  textAlign:"justify", display:"flex", backgroundColor:"#59C3C3", boxShadow:"0px 2px 2px #C6DBF0", color:"white"}}>
-                                <CardContent>
-                                    {question.text}
-                                </CardContent>
-                            </Card>
+                                        style={{height:"45px", width:"80%", marginLeft:"1%", marginTop:"1%",  textAlign:"justify", display:"flex", backgroundColor:"#59C3C3", boxShadow:"0px 2px 2px #C6DBF0", color:"white"}}>
+                                    <CardContent>
+                                        {question.text}
+                                    </CardContent>
+                                </Card>
+                            </div>
+                                <p style={{marginLeft:'60%', fontStyle:'italic', fontSize:'5', color:'grey'}}>
+                                     posted by {question.userP.firstName + " " + question.userP.lastName} on {this.parseDate(question.timestamp)} 
+                                </p>
                         </div>
-                            <p style={{marginLeft:'60%', fontStyle:'italic', fontSize:'5', color:'grey'}}> posted by {question.userP.firstName + " " + question.userP.lastName} on {question.timestamp} </p>
-                    </div>
                 ))} 
             </div>
                 <div style={{position:'relative', marginTop:'1%', marginLeft:'3%', width:'85%', display:'flex'}}>
                     <TextField style={{ width:'85%'}} label="Ask a question" variant="outlined" onChange={this.handleQuestionText} onKeyUp={this.pressEnter} value={this.state.questionText} />
-                    <Button variant="contained" size="small" style={{scale:'0.5', marginLeft:'1%', height:'50px', backgroundColor:'#1F75FE', color:'white'}} onClick={this.askQuestion}> Post question </Button>
+                    <Button variant="contained" size="small" style={{scale:'0.5', marginLeft:'1%', height:'50px', backgroundColor:'#1F75FE', color:'white'}} onClick={this.askQuestion}>
+                         Post question 
+                    </Button>
                 </div>       
             </div>
         );

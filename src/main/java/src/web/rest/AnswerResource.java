@@ -9,6 +9,7 @@ import src.domain.VoteAnswer;
 import src.repository.UserRepository;
 import src.repository.VoteAnswerRepository;
 import src.service.AnswerService;
+import src.service.MailService;
 import src.service.VoteAnswerService;
 import src.service.dto.AnswerDTO;
 
@@ -21,6 +22,7 @@ import src.domain.User;
 import javax.transaction.Transactional;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
@@ -35,6 +37,9 @@ public class AnswerResource {
 
     @Autowired
     private VoteAnswerService voteAnswerService;
+
+    @Autowired
+    private MailService mailService;
 
     public AnswerResource() {
     }
@@ -91,9 +96,21 @@ public class AnswerResource {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @GetMapping("/mentionusers")
+    @GetMapping("/mentionedusers")
     public ResponseEntity<List<User>> getUsers(){
         return new ResponseEntity<>(userRepository.findAll().subList(1, userRepository.findAll().size()), HttpStatus.OK);
+    }
+
+    @PostMapping("/tagusers")
+    @Transactional
+    public ResponseEntity tagUsers(@RequestBody Map<String, Object> users){
+        List<String> taggedUsers = (List<String>) users.get("users");
+        for (String taggedUser:
+             taggedUsers) {
+            String email = userRepository.findAll().stream().filter(user -> (user.getFirstName()+" "+user.getLastName()).equals(taggedUser)).map(User::getEmail).findFirst().get();
+            mailService.sendEmail(email, "You have been mentioned", "Hello " + taggedUser +"! You have been mentioned in a comment. Check it out!", false, false);
+        }
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/replies/{id}")
