@@ -34,7 +34,7 @@ public class Subject {
 
     @OneToMany(mappedBy = "subject")
     private Set<SubjectTeacher> subjectTeachers = new HashSet<>();
-
+    public Subject() {}
     public Subject(String title, String description, Integer semester, String section, String language, String type) {
         this.title = title;
         this.description = description;

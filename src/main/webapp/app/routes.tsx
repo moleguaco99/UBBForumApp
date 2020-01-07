@@ -14,10 +14,10 @@ import PrivateRoute from 'app/shared/auth/private-route';
 import ErrorBoundaryRoute from 'app/shared/error/error-boundary-route';
 import PageNotFound from 'app/shared/error/page-not-found';
 import { AUTHORITIES } from 'app/config/constants';
-import {Teacher} from "app/shared/layout/header/header-components";
 import {TeachersPage} from "app/components/teachers/TeachersPage";
 import {ForumPage} from "app/components/forum/ForumPage";
 import {TopicPage} from "app/components/forum/TopicPage"
+import SubjectPage from "./modules/subject/subjectPage";
 
 const Account = Loadable({
   loader: () => import(/* webpackChunkName: "account" */ 'app/modules/account'),
@@ -43,6 +43,7 @@ const Routes = () => (
       <PrivateRoute path="/entity" component={Entities} hasAnyAuthorities={[AUTHORITIES.USER]} />
       <ErrorBoundaryRoute path="/" exact component={Home} />
       <ErrorBoundaryRoute path="/teachers" component={TeachersPage} />
+      <ErrorBoundaryRoute path="/subject/:id?" component={SubjectPage} />
       <ErrorBoundaryRoute path="/forum" component={ForumPage} />
       <ErrorBoundaryRoute path="/topic" component={TopicPage} />
       <ErrorBoundaryRoute component={PageNotFound} />
