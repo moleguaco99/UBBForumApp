@@ -18,7 +18,9 @@ public class SubjectTeacher {
     @ManyToOne
     @JoinColumn(name = "subject")
     Subject subject;
+    public SubjectTeacher() {
 
+    }
     public SubjectTeacher(Teacher teacher, Subject subject) {
         this.teacher = teacher;
         this.subject = subject;
