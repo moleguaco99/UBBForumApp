@@ -21,23 +21,40 @@ import java.util.List;
 @RequestMapping("/ourApi")
 public class SubjectResource {
     private final Logger log = LoggerFactory.getLogger(Subject.class);
-    public SubjectResource(){}
     @Autowired
     private SubjectService subjectService;
+
+    public SubjectResource() {
+    }
+
     @GetMapping("/subjects")
     @PreAuthorize("hasRole(\"" + AuthoritiesConstants.USER + "\")")
     public ResponseEntity<List<Subject>> getSubjects() {
-        return new ResponseEntity<>(subjectService.getAllSubjects(), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(subjectService.getAllSubjects(), HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
+
     @GetMapping("/subjects/{id}")
     @PreAuthorize("hasRole(\"" + AuthoritiesConstants.USER + "\")")
-    public ResponseEntity<Subject> getSubject(@PathVariable long id){
+    public ResponseEntity<Subject> getSubject(@PathVariable long id) {
         log.debug("REST request to get subject with ID " + id);
-        return ResponseUtil.wrapOrNotFound(subjectService.getSubject(id));
+        try {
+            return ResponseUtil.wrapOrNotFound(subjectService.getSubject(id));
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
-    @GetMapping("/subjects/teachers/{id}")
+
+    @GetMapping("/subjects/{idS}/teachers")
     @PreAuthorize("hasRole(\"" + AuthoritiesConstants.USER + "\")")
-    public ResponseEntity<List<Teacher>> getTeachersForSubject(@PathVariable long id){
-        return new ResponseEntity<>(subjectService.getTeachersForSubject(id), HttpStatus.OK);
+    public ResponseEntity<List<Teacher>> getTeachersForSubject(@PathVariable long idS) {
+        try {
+            return new ResponseEntity<>(subjectService.getTeachersForSubject(idS), HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }
