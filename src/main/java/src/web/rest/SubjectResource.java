@@ -24,7 +24,11 @@ public class SubjectResource {
     public SubjectResource(){}
     @Autowired
     private SubjectService subjectService;
-
+    @GetMapping("/subjects")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.USER + "\")")
+    public ResponseEntity<List<Subject>> getSubjects() {
+        return new ResponseEntity<>(subjectService.getAllSubjects(), HttpStatus.OK);
+    }
     @GetMapping("/subjects/{id}")
     @PreAuthorize("hasRole(\"" + AuthoritiesConstants.USER + "\")")
     public ResponseEntity<Subject> getSubject(@PathVariable long id){
@@ -33,7 +37,7 @@ public class SubjectResource {
     }
     @GetMapping("/subjects/teachers/{id}")
     @PreAuthorize("hasRole(\"" + AuthoritiesConstants.USER + "\")")
-    public ResponseEntity<List<Teacher>> getAnswersToQuestion(@PathVariable long id){
+    public ResponseEntity<List<Teacher>> getTeachersForSubject(@PathVariable long id){
         return new ResponseEntity<>(subjectService.getTeachersForSubject(id), HttpStatus.OK);
     }
 }

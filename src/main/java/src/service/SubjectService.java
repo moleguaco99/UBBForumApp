@@ -32,4 +32,7 @@ public class SubjectService {
             .map(SubjectTeacher::getTeacher).collect(Collectors.toList());
 
     }
+    public List<Subject> getAllSubjects() {
+        return subjectRepository.findAll();
+    }
 }

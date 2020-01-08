@@ -53,9 +53,13 @@ export const SubjectPage = (props: ISubjectProps) => {
                       onClick={props.setOffset}
                     />)
                     :
+                    (<Alert color="danger">The page administrator assigned no teachers to this course </Alert>)
+                  }
+                  {props.teachers.length > 0 ?
+                    (<TeacherCard teacher={props.teachers[props.offset]}/>)
+                    :
                     (<div></div>)
                   }
-                  <TeacherCard teacher={props.teachers[props.offset]}/>
                   {props.offset + 1 < props.teachers.length ?
                     (<TeacherCard teacher={props.teachers[props.offset + 1]}/>)
                     :
