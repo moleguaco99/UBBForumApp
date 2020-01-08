@@ -18,7 +18,14 @@ export const Brand = props => (
     <span style={{fontStyle: "italic", color:"#1F305E"}} className="brand-title">UBBForumApp</span>
   </NavbarBrand>
 );
-
+export const Subjects = props => (
+  <NavItem>
+    <NavLink tag={Link} to="/subjectSearch" style={{fontStyle: "italic", color:"#1F305E"}} className="d-flex align-items-center">
+      <FontAwesomeIcon icon="book" style={{fontStyle: "italic", color:"#1F305E", marginRight:'3px'}}/>
+      <span style={{fontStyle: "italic", color:"#1F305E"}}>Subjects</span>
+    </NavLink>
+  </NavItem>
+);
 export const Home = props => (
   <NavItem>
     <NavLink tag={Link} to="/" style={{fontStyle: "italic", color:"#1F305E"}} className="d-flex align-items-center">

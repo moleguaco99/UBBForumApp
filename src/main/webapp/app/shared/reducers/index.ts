@@ -8,6 +8,7 @@ import administration, { AdministrationState } from 'app/modules/administration/
 import userManagement, { UserManagementState } from 'app/modules/administration/user-management/user-management.reducer';
 import register, { RegisterState } from 'app/modules/account/register/register.reducer';
 import subject, { SubjectState } from 'app/modules/subject/subject.reducer';
+import subjectSearch, { SubjectSearchState } from '../../modules/subject/subjectSearch/subjectSearch.reducer';
 import activate, { ActivateState } from 'app/modules/account/activate/activate.reducer';
 import password, { PasswordState } from 'app/modules/account/password/password.reducer';
 import settings, { SettingsState } from 'app/modules/account/settings/settings.reducer';
@@ -22,6 +23,7 @@ export interface IRootState {
   readonly register: RegisterState;
   readonly activate: ActivateState;
   readonly subject: SubjectState;
+  readonly subjectSearch: SubjectSearchState;
   readonly passwordReset: PasswordResetState;
   readonly password: PasswordState;
   readonly settings: SettingsState;
@@ -39,6 +41,7 @@ const rootReducer = combineReducers<IRootState>({
   passwordReset,
   password,
   subject,
+  subjectSearch,
   settings,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar

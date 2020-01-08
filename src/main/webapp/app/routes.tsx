@@ -18,7 +18,7 @@ import {TeachersPage} from "app/components/teachers/TeachersPage";
 import {ForumPage} from "app/components/forum/ForumPage";
 import {TopicPage} from "app/components/forum/TopicPage"
 import SubjectPage from "./modules/subject/subjectPage";
-
+import SubjectSearch from "./modules/subject/subjectSearch/subjectSearch"
 const Account = Loadable({
   loader: () => import(/* webpackChunkName: "account" */ 'app/modules/account'),
   loading: () => <div>loading ...</div>
@@ -33,6 +33,7 @@ const Routes = () => (
   <div className="view-routes">
     <Switch>
       <ErrorBoundaryRoute path="/login" component={Login} />
+      <ErrorBoundaryRoute path="/subjectSearch" component={SubjectSearch} />
       <ErrorBoundaryRoute path="/logout" component={Logout} />
       <ErrorBoundaryRoute path="/account/register" component={Register} />
       <ErrorBoundaryRoute path="/account/activate/:key?" component={Activate} />
