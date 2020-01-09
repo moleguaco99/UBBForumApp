@@ -99,9 +99,7 @@ public class Answer {
         this.text = text;
     }
 
-    public QAType getType() {
-        return type;
-    }
+    public QAType getType() { return type; }
 
     public void setType(QAType type) {
         this.type = type;
