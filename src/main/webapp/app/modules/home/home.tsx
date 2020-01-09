@@ -16,17 +16,16 @@ export const Home = (props: IHomeProp) => {
   return (
     <Row>
       <Col md="9">
-        <h2>Welcome to UBB FORUM!</h2>
-        <p className="lead">This is your homepage</p>
+        <h2 style={{marginTop: "3%", fontWeight: "bold", color:"#1F305E", fontStyle: "italic", textShadow: "2px 2px #DCDCDC"}}>Welcome to our forum!</h2>
         {account && account.login ? (
           <div>
-            <Alert color="success">You are logged in as user {account.login}.</Alert>
+            <Alert style={{backgroundColor: "#1F305E"}}>You are logged in as user {account.login}.</Alert>
           </div>
         ) : (
           <div>
-            <Alert color="warning">
+            <Alert style={{backgroundColor: "#1F305E", color:"#E0FBFC"}}>
               If you want to
-              <Link to="/login" className="alert-link">
+              <Link to="/login" style={{color:"#E0FBFC"}} className="alert-link">
                 {' '}
                 sign in
               </Link>
@@ -35,9 +34,9 @@ export const Home = (props: IHomeProp) => {
               <br />- User (login=&quot;user&quot; and password=&quot;user&quot;).
             </Alert>
 
-            <Alert color="warning">
+            <Alert style={{backgroundColor: "#1F305E", color: "#E0FBFC"}}>
               You do not have an account yet?&nbsp;
-              <Link to="/account/register" className="alert-link">
+              <Link to="/account/register" style={{color: "#E0FBFC"}} className="alert-link">
                 Register a new account
               </Link>
             </Alert>

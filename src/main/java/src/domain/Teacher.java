@@ -37,6 +37,9 @@ public class Teacher {
     @OneToMany(mappedBy = "teacher")
     private Set<SubjectTeacher> subjectTeachers = new HashSet<>();
 
+    public Teacher() {
+
+    }
     public Teacher(String firstName, String lastName, String email, String webPage, String photoPath) {
         this.firstName = firstName;
         this.lastName = lastName;

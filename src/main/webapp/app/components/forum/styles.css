@@ -1,0 +1,6 @@
+.mentionuser:hover {
+  opacity: 1;
+  background-color: #0d5c63;
+  color: white;
+  transition: 0.5s;
+}

@@ -14,9 +14,11 @@ import PrivateRoute from 'app/shared/auth/private-route';
 import ErrorBoundaryRoute from 'app/shared/error/error-boundary-route';
 import PageNotFound from 'app/shared/error/page-not-found';
 import { AUTHORITIES } from 'app/config/constants';
-import {Teacher} from "app/shared/layout/header/header-components";
 import {TeachersPage} from "app/components/teachers/TeachersPage";
-
+import {ForumPage} from "app/components/forum/ForumPage";
+import {TopicPage} from "app/components/forum/TopicPage"
+import SubjectPage from "./modules/subject/subjectPage";
+import SubjectSearch from "./modules/subject/subjectSearch/subjectSearch"
 const Account = Loadable({
   loader: () => import(/* webpackChunkName: "account" */ 'app/modules/account'),
   loading: () => <div>loading ...</div>
@@ -31,6 +33,7 @@ const Routes = () => (
   <div className="view-routes">
     <Switch>
       <ErrorBoundaryRoute path="/login" component={Login} />
+      <ErrorBoundaryRoute path="/subjectSearch" component={SubjectSearch} />
       <ErrorBoundaryRoute path="/logout" component={Logout} />
       <ErrorBoundaryRoute path="/account/register" component={Register} />
       <ErrorBoundaryRoute path="/account/activate/:key?" component={Activate} />
@@ -41,6 +44,9 @@ const Routes = () => (
       <PrivateRoute path="/entity" component={Entities} hasAnyAuthorities={[AUTHORITIES.USER]} />
       <ErrorBoundaryRoute path="/" exact component={Home} />
       <ErrorBoundaryRoute path="/teachers" component={TeachersPage} />
+      <ErrorBoundaryRoute path="/subject/:id?" component={SubjectPage} />
+      <ErrorBoundaryRoute path="/forum" component={ForumPage} />
+      <ErrorBoundaryRoute path="/topic" component={TopicPage} />
       <ErrorBoundaryRoute component={PageNotFound} />
     </Switch>
   </div>
