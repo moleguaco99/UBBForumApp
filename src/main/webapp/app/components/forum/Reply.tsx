@@ -22,7 +22,8 @@ export class Reply extends React.Component<any, any>{
             replyText: "",
             mention: false,
             idInterval: 0,
-            notifyUsers: ""
+            notifyUsers: "",
+            disable: false
         }
     }
 
@@ -81,12 +82,14 @@ export class Reply extends React.Component<any, any>{
     }
 
     toggleVote = () => {
-        
-        this.setState(prevState => {
-            return {
-                voted: !prevState.voted
-            }
-        })
+        console.log(this.state.disable);
+        if(this.state.disable === false){
+            this.setState(prevState => {
+                return {
+                    voted: !prevState.voted,
+                    disable: true
+                }
+            })
         
         fetch("http://localhost:8080/ourApi/vote/", {
             method:'POST',
@@ -103,7 +106,10 @@ export class Reply extends React.Component<any, any>{
             })
         }).catch(error => {console.log(error)})
 
+        setTimeout(()=>{ this.setState({
+                            disable:false })}, 2000)
     }
+}
 
     toggleAnswerForm = () =>{
         this.setState(prevState => {
