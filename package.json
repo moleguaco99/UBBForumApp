@@ -20,6 +20,7 @@
     "loaders.css": "0.1.2",
     "lodash": "4.17.13",
     "material-ui-flat-pagination": "^4.0.0",
+    "material-ui-search-bar": "^0.4.2",
     "moment": "2.24.0",
     "react": "16.8.5",
     "react-dom": "16.8.5",
