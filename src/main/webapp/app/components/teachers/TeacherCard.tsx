@@ -5,9 +5,9 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
-// import '../teachers/cardStyle.css';
+import '../teachers/cardStyle.css';
 
-export default class TeacherCard extends React.Component {
+export class TeacherCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};

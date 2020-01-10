@@ -1,20 +1,11 @@
 import React from 'react';
-import TeacherCard from '../teachers/TeacherCard';
-import SearchBar from 'material-ui-search-bar';
+import { TeacherCard } from '../teachers/TeacherCard';
 
 export const TeachersPage = () => {
   return (
     <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
       <div style={{ flexGrow: 0.2 }}>
         <h1>Filters</h1>
-        <SearchBar
-          onChange={() => {}}
-          onRequestSearch={() => {}}
-          style={{
-            margin: '0 auto',
-            maxWidth: 800
-          }}
-        />
       </div>
       <div style={{ flexGrow: 2 }}>
         <h1>Teachers</h1>
