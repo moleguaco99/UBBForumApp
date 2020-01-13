@@ -10,3 +10,21 @@
 .image {
   margin-left: auto;
 }
+
+.sticky {
+  position: -webkit-sticky;
+  position: fixed;
+  margin-top: 20px;
+  align-items: center;
+  width: 20%;
+  margin-left: -80px;
+}
+
+/* 620px */
+.searchBox {
+  margin-top: 20px;
+  margin-left: -40%;
+  position: -webkit-sticky;
+  position: fixed;
+  width: 15%;
+}

@@ -7,7 +7,21 @@ import Typography from '@material-ui/core/Typography';
 import React from 'react';
 import '../teachers/cardStyle.css';
 
-export class TeacherCard extends React.Component {
+type teacher = {
+  teacherId: number;
+  firstName: string;
+  lastName: string;
+  photoPath: string;
+  webPage: string;
+  rank: string;
+};
+
+interface IOwnProps {
+  teacher: teacher;
+  showTeacherDetails: (teacher: teacher) => void;
+}
+
+export class TeacherCard extends React.Component<IOwnProps> {
   constructor(props) {
     super(props);
     this.state = {};
@@ -19,7 +33,7 @@ export class TeacherCard extends React.Component {
         className="card"
         style={{
           padding: 'auto',
-          width: '40%',
+          width: '55%',
           display: 'flex',
           flexDirection: 'row',
           paddingBlockStart: '0px',
@@ -28,24 +42,33 @@ export class TeacherCard extends React.Component {
         }}
       >
         <div>
-          <img style={{ width: '138px', borderRadius: '3%' }} src={'http://www.cs.ubbcluj.ro/wp-content/uploads/Czibula-Istvan.jpg'} />
+          <img style={{ width: '138px', borderRadius: '3%' }} src={this.props.teacher.photoPath} />
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              {this.props.teacher.firstName + ' ' + this.props.teacher.lastName}
+            </Typography>
+          </CardContent>
           <CardActionArea>
             <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
-                Professor
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Details about the teacher.
+              <Typography
+                variant="body1"
+                color="textSecondary"
+                component="p"
+                onClick={event => {
+                  this.props.showTeacherDetails(this.props.teacher);
+                }}
+              >
+                Go to details about the teacher.
               </Typography>
             </CardContent>
           </CardActionArea>
           <CardActions>
             <div style={{ marginLeft: 'auto' }}>
               <Button size="small" color="primary">
-                <a href={'http://www.cs.ubbcluj.ro/~istvanc/'} target={'_blank'}>
-                  Go to teacher site
+                <a href={this.props.teacher.webPage} target={'_blank'}>
+                  Go to site
                 </a>
               </Button>
             </div>
