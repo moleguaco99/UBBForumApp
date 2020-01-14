@@ -19,6 +19,7 @@ public class SubjectService {
 
     @Autowired
     private SubjectRepository subjectRepository;
+
     @Autowired
     private SubjectTeacherRepository subjectTeacherRepository;
 
@@ -27,8 +28,12 @@ public class SubjectService {
     }
 
     public List<Teacher> getTeachersForSubject(long id) {
-        return subjectTeacherRepository.findAll().stream().filter(a -> a.getSubject().getIdSubject() == id)
-            .map(SubjectTeacher::getTeacher).collect(Collectors.toList());
+        return subjectTeacherRepository
+            .findAll()
+            .stream()
+            .filter(a -> a.getSubject().getIdSubject() == id)
+            .map(SubjectTeacher::getTeacher)
+            .collect(Collectors.toList());
     }
 
     public List<Subject> getAllSubjects() {

@@ -19,12 +19,12 @@ public class VoteAnswerResource {
 
     @PostMapping("/isvoted")
     @Transactional
-    public ResponseEntity<Boolean> isReplyVoted(@RequestBody Map<String, Object> answerVotedMap){
+    public ResponseEntity<Boolean> isReplyVoted(@RequestBody Map<String, Object> answerVotedMap) {
         Map<String, Object> map = (Map<String, Object>) answerVotedMap.get("answerVotedMap");
 
         Integer idAnswer = (Integer) map.get("idAnswer");
         Integer idUser = (Integer) map.get("idUser");
 
-        return new ResponseEntity<>(voteAnswerService.checkVote((long)idAnswer, (long)idUser),HttpStatus.OK);
+        return new ResponseEntity<>(voteAnswerService.checkVote((long) idAnswer, (long) idUser), HttpStatus.OK);
     }
 }

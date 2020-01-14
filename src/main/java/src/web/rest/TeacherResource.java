@@ -20,12 +20,15 @@ import src.service.TeacherService;
 import java.util.List;
 
 import java.io.*;
+import java.util.Objects;
 
 @RestController
 @CrossOrigin
 @RequestMapping("/ourApi")
 public class TeacherResource {
+
     final String TEACHER_PHOTOS_PATH = "./src/main/java/src/web/rest/resources/teacherPhotos/";
+
     @Autowired
     private TeacherService teacherService;
 
@@ -46,19 +49,27 @@ public class TeacherResource {
     }
 
     @GetMapping("/teachers")
-    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.USER + "\")")
     public ResponseEntity<List<Teacher>> findAll() {
         return new ResponseEntity<>(teacherService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/teacher/{idT}/subjects")
-    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.USER + "\")")
     public ResponseEntity<List<Subject>> findAllSubjects(@PathVariable("idT") Long idTeacher) {
         try {
             List<Subject> subjects = teacherService.findAllSubjectsForTeacher(idTeacher);
             return new ResponseEntity<>(subjects, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/teachers/{idT}")
+    public ResponseEntity<Teacher> findOne(@PathVariable("idT") Long idTeacher) {
+        Teacher teacher = teacherService.findOne(idTeacher);
+        if (Objects.nonNull(teacher)) {
+            return new ResponseEntity<>(teacher, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
 }

@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class TeacherService {
+
     @Autowired
     private TeacherRepository teacherRepository;
 
@@ -24,6 +25,11 @@ public class TeacherService {
 
     public List<Teacher> findAll() {
         return teacherRepository.findAll();
+    }
+
+    public Teacher findOne(Long idTeacher) {
+        Optional<Teacher> optionalTeacher = teacherRepository.findById(idTeacher);
+        return optionalTeacher.orElse(null);
     }
 
     public List<Subject> findAllSubjectsForTeacher(Long idTeacher) {

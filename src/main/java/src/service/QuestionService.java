@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import src.domain.Question;
 import src.repository.QuestionRepository;
+
 import java.util.List;
 
 @Service
@@ -21,5 +22,9 @@ public class QuestionService {
     public void save(Question question) {
         questionRepository.save(question);
         questionRepository.flush();
+    }
+
+    public Question saveAndReturn(Question question) {
+        return questionRepository.saveAndFlush(question);
     }
 }
