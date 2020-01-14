@@ -6,6 +6,11 @@ import TextField from '@material-ui/core/TextField';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import SaveIcon from '@material-ui/icons/Save';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 interface ArchivePageInterface{
     fileName: string,
@@ -13,7 +18,8 @@ interface ArchivePageInterface{
     url: string,
     archives: Archive[],
     uploadDescription: string,
-    user: any
+    user: any,
+    open: boolean
 }
 
 type Archive = {
@@ -34,7 +40,8 @@ export class ArchivePage extends React.Component<any, ArchivePageInterface>{
             url: "",
             archives: [],
             uploadDescription: "",
-            user: null
+            user: null,
+            open: false
         }
     }
 
@@ -97,6 +104,10 @@ export class ArchivePage extends React.Component<any, ArchivePageInterface>{
                         approved: true,
                         userA: this.state.user
                     })
+                }).then(response => {
+                    this.setState({
+                        open: true
+                    })
                 })
             })
         });
@@ -105,9 +116,14 @@ export class ArchivePage extends React.Component<any, ArchivePageInterface>{
             fileName: "",
             url: "",
             file: null,
-            uploadDescription: ""
+            uploadDescription: "",
         })
+    }
 
+    handleClose = () => {
+        this.setState({
+            open: false
+        })
     }
 
     getIcon(imageUrl: string){
@@ -121,6 +137,23 @@ export class ArchivePage extends React.Component<any, ArchivePageInterface>{
     render(){
         return(
         <div style={{height:"80vh", overflow:"auto"}}>
+            <Dialog
+                open={this.state.open}
+                onClose={this.handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description">
+                <DialogTitle>{"Upload succesfully"}</DialogTitle>
+                <DialogContent>
+                <DialogContentText >
+                    Your archive has been uploaded succesfully! Thank you for using our page!
+                </DialogContentText>
+                </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleClose} color="primary" autoFocus>
+                                Thank you!
+                        </Button>
+                    </DialogActions>
+            </Dialog>
             <h2 style={{marginTop: "1%", fontWeight: "bold", color:"#1F305E", fontStyle: "italic", textShadow: "2px 2px #DCDCDC"}}>Welcome to our archive page!</h2>
                 <div style={{display: "flex", marginTop:"2%"}}>
                     <div style={{marginLeft:"8%"}}>
