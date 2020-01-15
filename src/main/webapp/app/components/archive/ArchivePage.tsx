@@ -11,6 +11,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Loader from 'react-loader-spinner';
 
 interface ArchivePageInterface{
     fileName: string,
@@ -19,7 +20,8 @@ interface ArchivePageInterface{
     archives: Archive[],
     uploadDescription: string,
     user: any,
-    open: boolean
+    open: boolean,
+    loading: boolean
 }
 
 type Archive = {
@@ -41,7 +43,8 @@ export class ArchivePage extends React.Component<any, ArchivePageInterface>{
             archives: [],
             uploadDescription: "",
             user: null,
-            open: false
+            open: false,
+            loading: false
         }
     }
 
@@ -85,18 +88,21 @@ export class ArchivePage extends React.Component<any, ArchivePageInterface>{
     handleUpload = () => {
         const {file} = this.state;
         const uploadTask = storage.ref(`files/${file.name}`).put(file);
-        console.log(this.state.uploadDescription);
+        this.setState({
+            loading: true
+        })
         uploadTask.on('state_changed', (snapshot)=>{ },
          (error) => {
             console.log(error);
             }, ()=>{
             storage.ref('files').child(file.name).getDownloadURL().then(url => {
+                console.log(this.state.uploadDescription)
                 fetch("http://localhost:8080/ourApi/archiveUpload", {
                     method: "POST",
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
-                    },  
+                    },
                     body: JSON.stringify({
                         title: file.name,
                         description: this.state.uploadDescription,
@@ -106,18 +112,16 @@ export class ArchivePage extends React.Component<any, ArchivePageInterface>{
                     })
                 }).then(response => {
                     this.setState({
-                        open: true
+                        open: true,
+                        fileName: "",
+                        url: "",
+                        file: null,
+                        uploadDescription: "",
+                        loading: false
                     })
                 })
             })
         });
-
-        this.setState({
-            fileName: "",
-            url: "",
-            file: null,
-            uploadDescription: "",
-        })
     }
 
     handleClose = () => {
@@ -178,9 +182,14 @@ export class ArchivePage extends React.Component<any, ArchivePageInterface>{
                                 </Button>
                             </label>
                             <br/>
-                            <Button variant="contained" color="primary" startIcon={<CloudUploadIcon />} onClick={this.handleUpload}>
+                            <div style={{display: "flex"}}>
+                                <Button variant="contained" color="primary" startIcon={<CloudUploadIcon />} onClick={this.handleUpload}>
                                       Upload
-                            </Button>
+                                </Button>
+                                {this.state.loading ? <div style={{marginLeft:"2%", marginTop:"1%"}}>
+                                                        <Loader type="Oval" color="#303F9F" height={30} width={30}/>
+                                                      </div> : null}
+                            </div>
                         </div>
                           
                     </div>
