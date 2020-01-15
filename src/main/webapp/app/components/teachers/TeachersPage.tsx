@@ -1,21 +1,19 @@
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 import React from 'react';
 import ReactSearchBox from 'react-search-box';
 import '../teachers/cardStyle.css';
 import { TeacherCard } from '../teachers/TeacherCard';
+import TextField from '@material-ui/core/TextField';
 
 interface TeacherInterface {
   teachers: teacher[];
   filteredTeachers: teacher[];
   searchedValue: string;
   teacherDetailsActive: boolean;
-  teacherToShow?: teacher;
+  teacherToShow: teacher;
+  subjectsOfInterest: any;
 }
 type teacher = {
-  teacherId: number;
+  idTeacher: number;
   firstName: string;
   lastName: string;
   email: string;
@@ -30,7 +28,9 @@ export class TeachersPage extends React.Component<any, TeacherInterface> {
       teachers: [],
       filteredTeachers: [],
       searchedValue: '',
-      teacherDetailsActive: false
+      teacherDetailsActive: false,
+      teacherToShow: null,
+      subjectsOfInterest: ""
     };
   }
   componentDidMount() {
@@ -67,48 +67,66 @@ export class TeachersPage extends React.Component<any, TeacherInterface> {
       teacherDetailsActive: true,
       teacherToShow: teacher
     });
-  };
+   
+    fetch('http://localhost:8080/ourApi/subjectsTeacher/'+teacher.idTeacher)
+      .then(response => response.json())
+      .then(json => {
+        this.setState({
+          subjectsOfInterest: json.value
+        })
+      })
+      /* eslint-disable no-console */
+      .catch(error => console.log(error));
+  }
+
   render() {
     return (
-      <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-        <div className="searchBox" style={{ flexGrow: 0.1 }}>
-          <ReactSearchBox placeholder="Search a teacher" value={this.state.searchedValue} onChange={value => this.handleSearch(value)} />
-        </div>
-        <div style={{ flexGrow: 2, paddingLeft: '11%' }}>
-          <h1>Teachers</h1>
-          {this.state.filteredTeachers !== []
-            ? this.state.filteredTeachers.map(t => (
-                <TeacherCard key={t.teacherId} teacher={t} showTeacherDetails={this.showTeacherDetails}></TeacherCard>
-              ))
-            : this.state.teachers.map(t => (
-                <TeacherCard key={t.teacherId} teacher={t} showTeacherDetails={this.showTeacherDetails}></TeacherCard>
-              ))}
-        </div>
-        <div style={{ flexGrow: 0.4, display: 'flex', justifyContent: 'space-around', alignItems: 'flex-start' }}>
-          {this.state.teacherDetailsActive ? (
-            <div className="sticky">
-              <Card>
-                <CardContent>
-                  <Typography variant="h5" component="h2">
-                    Teacher Details
-                  </Typography>
-                  <Typography color="textSecondary" gutterBottom>
-                    {this.state.teacherToShow.email}
-                  </Typography>
-                  <Typography color="textSecondary" gutterBottom>
-                    {this.state.teacherToShow.rank}
-                  </Typography>
-                  <Typography color="textSecondary" gutterBottom>
-                    Subjects
-                  </Typography>
-                </CardContent>
-              </Card>
+        <div style={{display:'flex', width:"100%"}}>
+            <div style={{flexGrow:0.3}}>
+              <h2 style={{fontWeight: "bold", color:"#1F305E", fontStyle: "italic", textShadow: "2px 2px #DCDCDC", marginTop:"2%", marginBottom:"2%"}}>Filter</h2>
+              <div style={{width:"75%"}}>
+              <ReactSearchBox placeholder="Search a teacher" value={this.state.searchedValue} onChange={value => this.handleSearch(value)} />
+              </div>
             </div>
-          ) : (
-            <div></div>
-          )}
+            <div style={{flexGrow:0.3}}> 
+                <h2 style={{fontWeight: "bold", color:"#1F305E", fontStyle: "italic", textShadow: "2px 2px #DCDCDC", marginTop:"2%", marginBottom:"1%"}}>Teachers</h2>
+                <div>
+                {this.state.filteredTeachers !== [] ? this.state.filteredTeachers.map(t => (
+                          <TeacherCard key={t.idTeacher} teacher={t} showTeacherDetails={this.showTeacherDetails}></TeacherCard>
+                    )) : this.state.teachers.map(t => (
+                          <TeacherCard key={t.idTeacher} teacher={t} showTeacherDetails={this.showTeacherDetails}></TeacherCard>
+                  ))} 
+                </div>
+            </div>
+            <div style={{flexGrow:0.3, display:"flex", flexDirection:"column", position:"relative"}}> 
+                <h2 style={{fontWeight: "bold", color:"#1F305E", fontStyle: "italic", textShadow: "2px 2px #DCDCDC", marginTop:"2%", marginBottom:"1%"}}>Details</h2>
+                {this.state.teacherDetailsActive ? 
+                  <div>
+                    <h4 style={{fontWeight: "bold", color:"#1F305E", fontStyle: "italic", textShadow: "2px 2px #DCDCDC", marginTop:"2%", marginBottom:"1%"}}> Some details about {this.state.teacherToShow.firstName+ " " + this.state.teacherToShow.lastName}</h4>
+                    <TextField variant="outlined"
+                        style={{ width: "60%"}}
+                        value={this.state.teacherToShow.email}
+                        label="E-mail address"
+                        margin="normal"
+                        read-only="true" />
+
+                    <TextField variant="outlined"
+                        style={{ width: "60%"}}
+                        value={this.state.teacherToShow.rank}
+                        label="Teaching rank"
+                        margin="normal"
+                        read-only="true" />
+
+                    <TextField variant="outlined"
+                        style={{ width: "60%"}}
+                        value={this.state.subjectsOfInterest}
+                        label="Domains of interest"
+                        margin="normal"
+                        read-only="true" />
+                  </div>
+                  : null}
+            </div>
         </div>
-      </div>
     );
   }
 }

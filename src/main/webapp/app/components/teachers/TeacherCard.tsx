@@ -8,7 +8,7 @@ import React from 'react';
 import '../teachers/cardStyle.css';
 
 type teacher = {
-  teacherId: number;
+  idTeacher: number;
   firstName: string;
   lastName: string;
   photoPath: string;
@@ -32,8 +32,7 @@ export class TeacherCard extends React.Component<IOwnProps> {
       <Card
         className="card"
         style={{
-          padding: 'auto',
-          width: '55%',
+          width: '80%',
           display: 'flex',
           flexDirection: 'row',
           paddingBlockStart: '0px',
@@ -42,20 +41,21 @@ export class TeacherCard extends React.Component<IOwnProps> {
         }}
       >
         <div>
-          <img style={{ width: '138px', borderRadius: '3%' }} src={this.props.teacher.photoPath} />
+          <img style={{ height:"100%", borderRadius: '3%' }} src={this.props.teacher.photoPath} />
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft:"14%" }}>
           <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
+            <Typography gutterBottom variant="h5" component="h2" align="left">
               {this.props.teacher.firstName + ' ' + this.props.teacher.lastName}
             </Typography>
           </CardContent>
           <CardActionArea>
             <CardContent>
               <Typography
-                variant="body1"
+                variant="body2"
                 color="textSecondary"
                 component="p"
+                align="left"
                 onClick={event => {
                   this.props.showTeacherDetails(this.props.teacher);
                 }}

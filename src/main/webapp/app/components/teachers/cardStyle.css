@@ -1,10 +1,8 @@
 .card {
+  min-width: 600;
   max-width: 600;
   margin-bottom: 20;
   margin-bottom: 2%;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0px;
 }
 
 .image {
@@ -18,13 +16,4 @@
   align-items: center;
   width: 20%;
   margin-left: -80px;
-}
-
-/* 620px */
-.searchBox {
-  margin-top: 20px;
-  margin-left: -40%;
-  position: -webkit-sticky;
-  position: fixed;
-  width: 15%;
 }

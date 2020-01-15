@@ -34,4 +34,9 @@ public class SubjectService {
     public List<Subject> getAllSubjects() {
         return subjectRepository.findAll();
     }
+
+    public String getSubjectsForTeacher(long idT) {
+        return subjectTeacherRepository.findAll().stream().filter(s-> s.getTeacher().getIdTeacher() == idT)
+            .map(SubjectTeacher::getSubject).map(Subject::getTitle).reduce((s1, s2)-> s1 + " " + s2).get();
+    }
 }
