@@ -3,6 +3,8 @@ import ReactSearchBox from 'react-search-box';
 import '../teachers/cardStyle.css';
 import { TeacherCard } from '../teachers/TeacherCard';
 import TextField from '@material-ui/core/TextField';
+import { faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface TeacherInterface {
   teachers: teacher[];
@@ -79,6 +81,13 @@ export class TeachersPage extends React.Component<any, TeacherInterface> {
       .catch(error => console.log(error));
   }
 
+  disableDetails = () => {
+    this.setState({
+      teacherDetailsActive: false,
+      teacherToShow: null
+    })
+  }
+
   render() {
     return (
         <div style={{display:'flex', width:"100%"}}>
@@ -123,6 +132,9 @@ export class TeachersPage extends React.Component<any, TeacherInterface> {
                         label="Domains of interest"
                         margin="normal"
                         read-only="true" />
+                  <div style={{marginLeft:"1%"}} onClick={this.disableDetails}>
+                  <FontAwesomeIcon icon={faLongArrowAltRight} ></FontAwesomeIcon>
+                  </div>
                   </div>
                   : null}
             </div>
