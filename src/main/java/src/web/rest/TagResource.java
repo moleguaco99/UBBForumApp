@@ -94,10 +94,23 @@ public class TagResource {
         return new ResponseEntity<>(tagDTOList, HttpStatus.OK);
     }
 
-    @GetMapping("/tags/{tagID}/questions")
+    @GetMapping("/tags/search-by-id/{tagID}/questions")
     public ResponseEntity<List<QuestionDTO>> findAllQuestionsForOneTag(@PathVariable("tagID") Long tagID) {
         try {
             List<Question> questionList = tagService.findAllQuestionsForOneTag(tagID);
+            questionList.forEach(question -> question.setTagQuestionSet(new HashSet<>()));
+            List<QuestionDTO> questionDTOList = questionMapper.questionListToQuestionDTOList(questionList);
+            return new ResponseEntity<>(questionDTOList, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/tags/search-by-name/{tagName}/questions")
+    public ResponseEntity<List<QuestionDTO>> findAllQuestionsForOneTag(@PathVariable("tagName") String tagName) {
+        try {
+            List<Question> questionList = tagService.findAllQuestionsForOneTag(tagName);
             questionList.forEach(question -> question.setTagQuestionSet(new HashSet<>()));
             List<QuestionDTO> questionDTOList = questionMapper.questionListToQuestionDTOList(questionList);
             return new ResponseEntity<>(questionDTOList, HttpStatus.OK);

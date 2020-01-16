@@ -7,11 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import src.domain.Subject;
 import src.domain.Teacher;
-import src.security.AuthoritiesConstants;
 import src.service.SubjectService;
 
 import java.util.List;
@@ -28,7 +26,6 @@ public class SubjectResource {
     }
 
     @GetMapping("/subjects")
-    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.USER + "\")")
     public ResponseEntity<List<Subject>> getSubjects() {
         try {
             return new ResponseEntity<>(subjectService.getAllSubjects(), HttpStatus.OK);
@@ -38,7 +35,6 @@ public class SubjectResource {
     }
 
     @GetMapping("/subjects/{id}")
-    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.USER + "\")")
     public ResponseEntity<Subject> getSubject(@PathVariable long id) {
         log.debug("REST request to get subject with ID " + id);
         try {
@@ -49,7 +45,6 @@ public class SubjectResource {
     }
 
     @GetMapping("/subjects/{idS}/teachers")
-    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.USER + "\")")
     public ResponseEntity<List<Teacher>> getTeachersForSubject(@PathVariable long idS) {
         try {
             return new ResponseEntity<>(subjectService.getTeachersForSubject(idS), HttpStatus.OK);
