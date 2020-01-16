@@ -16,9 +16,7 @@ export const TeacherCard = ({teacher}: ITeacherCardProps) => {
   return (
     <Card className="card">
       <Row>
-        <Col md={3}>
-          <div><img width={150} height={150} src={"ourApi/teachers/photo/" + teacher.photoPath}/></div>
-        </Col>
+          <div style={{height:"100%", marginLeft:"2%"}}><img src={teacher.photoPath}/></div>
         <Col md={9}>
           <div>
             <CardActionArea>

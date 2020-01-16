@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 
 export const ACTION_TYPES = {
@@ -28,6 +26,8 @@ const initialState = {
 export type SubjectSearchState = Readonly<typeof initialState>;
 
 const getSectionOptions = subjects => {
+  /* eslint-disable no-console */
+  console.log(subjects);
   const hashMap = {};
   const options = [];
   for (let i = 0; i < subjects.length; i++) {
@@ -99,9 +99,9 @@ export default (state: SubjectSearchState = initialState, action): SubjectSearch
     case SUCCESS(ACTION_TYPES.FETCH_SUBJECTS):
       return {
         ...state,
-        subjects: action.payload.data,
-        subjectsBySection: action.payload.data,
-        sectionOptions: getSectionOptions(action.payload.data)
+        subjects: action.payload,
+        subjectsBySection: action.payload,
+        sectionOptions: getSectionOptions(action.payload)
       };
     case ACTION_TYPES.CHANGE_SECTION:
       return {
@@ -169,7 +169,7 @@ export const changeSection = section => ({
 });
 export const fetchSubjects = () => ({
   type: ACTION_TYPES.FETCH_SUBJECTS,
-  payload: axios.get('ourApi/subjects')
+  payload: fetch('http://localhost:8080/ourApi/subjects').then(response => response.json())
 });
 export const showModal = () => ({
   type: ACTION_TYPES.SHOW_MODAL

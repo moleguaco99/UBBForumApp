@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 
 export const ACTION_TYPES = {
@@ -43,7 +41,7 @@ export default (state: SubjectState = initialState, action): SubjectState => {
       return {
         ...state,
         fetchSuccess: true,
-        subject: action.payload.data
+        subject: action.payload
       };
     case REQUEST(ACTION_TYPES.FETCH_SUBJECT_TEACHERS):
       return {
@@ -60,7 +58,7 @@ export default (state: SubjectState = initialState, action): SubjectState => {
       return {
         ...state,
         fetchTeachersSuccess: true,
-        teachers: action.payload.data
+        teachers: action.payload
       };
     case ACTION_TYPES.SET_OFFSET:
       return {
@@ -73,11 +71,11 @@ export default (state: SubjectState = initialState, action): SubjectState => {
 };
 export const fetchSubject = id => ({
   type: ACTION_TYPES.FETCH_SUBJECT,
-  payload: axios.get('ourApi/subjects/' + id)
+  payload: fetch('http://localhost:8080/ourApi/subjects/' + id).then(response => response.json())
 });
 export const fetchSubjectTeachers = id => ({
   type: ACTION_TYPES.FETCH_SUBJECT_TEACHERS,
-  payload: axios.get('ourApi/subjects/' + id + '/teachers')
+  payload: fetch('http://localhost:8080/ourApi/subjects/' + id + '/teachers').then(response => response.json())
 });
 export const setOffset = (event, offset) => ({
   type: ACTION_TYPES.SET_OFFSET,
