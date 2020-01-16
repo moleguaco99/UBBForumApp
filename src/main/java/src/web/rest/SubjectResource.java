@@ -1,6 +1,5 @@
 package src.web.rest;
 
-
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,11 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import src.domain.StringWrapper;
 import src.domain.Subject;
 import src.domain.Teacher;
 import src.security.AuthoritiesConstants;
 import src.service.SubjectService;
-
 import java.util.List;
 
 @RestController
@@ -53,6 +52,15 @@ public class SubjectResource {
     public ResponseEntity<List<Teacher>> getTeachersForSubject(@PathVariable long idS) {
         try {
             return new ResponseEntity<>(subjectService.getTeachersForSubject(idS), HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/subjectsTeacher/{idT}")
+    public ResponseEntity<StringWrapper> getDomainsOfInterest(@PathVariable long idT) {
+        try {
+            return new ResponseEntity<>(new StringWrapper(subjectService.getSubjectsForTeacher(idT)), HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
