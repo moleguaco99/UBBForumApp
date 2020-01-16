@@ -1,5 +1,6 @@
 package src.web.rest;
 
+
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import src.domain.Subject;
 import src.domain.Teacher;
 import src.security.AuthoritiesConstants;
 import src.service.SubjectService;
+
 import java.util.List;
 
 @RestController

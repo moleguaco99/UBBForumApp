@@ -2,16 +2,16 @@ import React from 'react';
 import Card from '@material-ui/core/Card';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import { CardContent } from '@material-ui/core';
 import axios from 'axios';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
 import { Reply } from './Reply';
-import "./styles.css"
-
+import "./styles.css";
+import { Popup } from './Popup';
 
 export class TopicPage extends React.Component<any, any>{
     
@@ -24,9 +24,12 @@ export class TopicPage extends React.Component<any, any>{
             topicQuestion: this.props.location.state.from,
             open: false,
             mentionusers: [],
-            idInterval: 0
+            notifyUsers: "",
+            idInterval: 0,
+            mention: false
         }
     }
+
 
     componentDidMount(){
         axios.get('api/account').
@@ -69,6 +72,11 @@ export class TopicPage extends React.Component<any, any>{
         this.setState({
             replyText: event.target.value
         })
+        if(!event.target.value.includes("@")){
+            this.setState({
+                mention: false
+            })  
+        }
     }
     
     getIcon(imageUrl:string, marginL:string, marginT:string){
@@ -80,6 +88,15 @@ export class TopicPage extends React.Component<any, any>{
                 style={{height:"50px", marginTop: marginT, alignSelf:"center", marginLeft: marginL, borderRadius:"50%", border:"1px solid #D8D8D8"}}></img>
     }
  
+    triggerMention = (event : React.KeyboardEvent<HTMLInputElement>) => {
+
+        if(event.key === "@"){
+            this.setState({
+                mention: true
+            })
+        }
+    }
+
     replyTopic = () => {
 
         if(this.state.replyText === ""){
@@ -102,10 +119,28 @@ export class TopicPage extends React.Component<any, any>{
                     type: 'Q'
                  })
                 }).catch(error => console.log(error))
+                const usersList = this.state.notifyUsers.split(";");
+                const taggedUsers = [];
+
+                usersList.forEach(element => {
+                    if(this.state.replyText.includes(element) && element !== "")
+                        taggedUsers.push(element);
+                });
+                
+                fetch('http://localhost:8080/ourApi/tagusers/', {
+                    method: 'POST',
+                    headers:{
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        users: taggedUsers })
+                }).catch(error => console.log(error))
 
                 this.setState({ 
-                    replyText: ""
-            })
+                    replyText: "",
+                    notifyUsers: ""
+                })
         }
     }
 
@@ -124,6 +159,19 @@ export class TopicPage extends React.Component<any, any>{
         return newDate[0] + " " + newDate[1].split(".")[0];
     }
 
+    mention = (msg: string) => {
+
+        let val = this.state.replyText.substring(0, this.state.replyText.length-1)
+        val += msg;
+        this.setState(prevState => {
+            return {
+                replyText: val,
+                mention: false,
+                notifyUsers: prevState.notifyUsers + msg + ";"
+            }
+        })
+    }
+
     componentWillUnmount(){
         clearInterval(this.state.idInterval)
     }
@@ -132,19 +180,9 @@ export class TopicPage extends React.Component<any, any>{
         return(
             <div style={{overflow:'auto'}}>
                 
-                <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
-                    <DialogTitle style={{fontSize:"30px", fontWeight:"bolder", color:"black", alignContent:"center"}}>{"Please write an answer!"}</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText style={{fontSize:"13px"}}>
-                                Your answer cannot be blank!
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={this.handleClose} color="primary">
-                            Ok
-                        </Button>
-                    </DialogActions>
-                </Dialog>
+                {this.state.open ? <Popup title={"Try giving a better answer"} 
+                                            content={"You have to do a lot better than that if you want to post an answer"} 
+                                            button={"My bad..."} popup={this.handleClose}></Popup> : null}
                 
                 <div style={{display:'flex'}}>
                     {this.getIcon(this.state.topicQuestion.userP.imageUrl, "3%", "3%")}
@@ -163,10 +201,21 @@ export class TopicPage extends React.Component<any, any>{
                 </div>
 
                 <div style={{position:'relative', marginTop:'2%', marginLeft:'5%', width:'85%', display:'flex'}}>
-                    <TextField style={{ width:'85%'}} label="Give an answer" variant="outlined" onChange={this.handleReplyText} onKeyUp={this.pressEnter} value={this.state.replyText} />
+                    <TextField style={{ width:'85%'}} label="Give an answer" variant="outlined" onChange={this.handleReplyText} onKeyUp={this.pressEnter} onKeyPress={this.triggerMention} value={this.state.replyText} />
                     <Button variant="contained" size="small" style={{scale:'0.5', marginLeft:'1%', height:'50px', backgroundColor:'#1F75FE', color:'white'}}
                             onClick={this.replyTopic}> Answer topic </Button>
                 </div>
+                {this.state.mention ? 
+                        <List style={{ backgroundColor: "white", zIndex:5 , width:"15%", marginLeft:"5%"}} dense={true} >
+                            {this.state.mentionusers.map(user=>(
+                                    <ListItem key={user.idUser} className="mentionuser" onClick={() => this.mention(user.firstName + " " + user.lastName)}>
+                                        <ListItemAvatar>
+                                            <Avatar src={user.imageUrl} />
+                                        </ListItemAvatar>
+                                        <ListItemText primary={user.firstName + " " + user.lastName}/>
+                                    </ListItem>
+                            ))}
+                        </List> : null}
 
             </div>
         )
