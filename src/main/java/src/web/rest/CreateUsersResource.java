@@ -28,15 +28,15 @@ public class CreateUsersResource {
         List<UserDTO> userDTOList = new ArrayList<>();
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<?> responseEntity1 = create1(userEmailDTO, userDTOList, restTemplate);
-        if (Objects.nonNull(responseEntity1)){
+        if (Objects.nonNull(responseEntity1)) {
             return responseEntity1;
         }
         ResponseEntity<?> responseEntity2 = create2(userEmailDTO, userDTOList, restTemplate);
-        if (Objects.nonNull(responseEntity2)){
+        if (Objects.nonNull(responseEntity2)) {
             return responseEntity2;
         }
         ResponseEntity<?> responseEntity3 = create3(userEmailDTO, userDTOList, restTemplate);
-        if (Objects.nonNull(responseEntity3)){
+        if (Objects.nonNull(responseEntity3)) {
             return responseEntity3;
         }
         return new ResponseEntity<>(userDTOList, HttpStatus.CREATED);

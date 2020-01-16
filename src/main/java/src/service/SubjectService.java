@@ -9,6 +9,7 @@ import src.domain.Teacher;
 import src.repository.SubjectRepository;
 import src.repository.SubjectTeacherRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,6 +23,19 @@ public class SubjectService {
 
     @Autowired
     private SubjectTeacherRepository subjectTeacherRepository;
+
+    public Subject save(Subject subject) {
+        return subjectRepository.saveAndFlush(subject);
+    }
+
+    public List<Subject> saveAll(List<Subject> subjectListReceived) {
+        List<Subject> subjectList = new ArrayList<>();
+        subjectListReceived.forEach(subject -> {
+            Subject subjectSaved = subjectRepository.saveAndFlush(subject);
+            subjectList.add(subjectSaved);
+        });
+        return subjectList;
+    }
 
     public Optional<Subject> getSubject(long id) {
         return subjectRepository.findById(id);

@@ -7,6 +7,7 @@ import src.domain.Question;
 import src.domain.TagQuestion;
 import src.repository.TagQuestionRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,15 @@ public class TagQuestionService {
 
     public TagQuestion save(TagQuestion tagQuestion) {
         return repository.saveAndFlush(tagQuestion);
+    }
+
+    public List<TagQuestion> saveAll(List<TagQuestion> tagQuestionListReceived) {
+        List<TagQuestion> tagQuestionList = new ArrayList<>();
+        tagQuestionListReceived.forEach(tagQuestionFromListReceived -> {
+            TagQuestion tagQuestionSaved = this.repository.saveAndFlush(tagQuestionFromListReceived);
+            tagQuestionList.add(tagQuestionSaved);
+        });
+        return tagQuestionList;
     }
 
     public List<String> findAllTagsNameForQuestion(Question question) {
