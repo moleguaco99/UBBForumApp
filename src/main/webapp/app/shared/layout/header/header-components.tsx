@@ -3,7 +3,7 @@ import React from 'react';
 import { NavItem, NavLink, NavbarBrand } from 'reactstrap';
 import { NavLink as Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faComments } from "@fortawesome/free-solid-svg-icons";
+import { faComments, faUpload, faChalkboardTeacher } from "@fortawesome/free-solid-svg-icons";
 
 
 export const BrandIcon = props => (
@@ -18,6 +18,7 @@ export const Brand = props => (
     <span style={{fontStyle: "italic", color:"#1F305E"}} className="brand-title">UBBForumApp</span>
   </NavbarBrand>
 );
+
 export const Subjects = props => (
   <NavItem>
     <NavLink tag={Link} to="/subjectSearch" style={{fontStyle: "italic", color:"#1F305E"}} className="d-flex align-items-center">
@@ -38,7 +39,7 @@ export const Home = props => (
 export const Teacher = props => (
   <NavItem>
     <NavLink tag={Link} to="/teachers" style={{fontStyle: "italic", color:"#1F305E"}} className="d-flex align-items-center">
-        <FontAwesomeIcon style={{fontStyle: "italic", color:"#1F305E", marginRight:'3px'}} icon="book" />
+        <FontAwesomeIcon style={{fontStyle: "italic", color:"#1F305E", marginRight:'3px'}} icon={faChalkboardTeacher} />
         <span style={{fontStyle: "italic", color:"#1F305E"}}>Teachers</span>
     </NavLink>
   </NavItem>
@@ -50,6 +51,15 @@ export const Forum = props => (
     <NavLink tag={Link} to="/forum" style={{fontStyle: "italic", color:"#1F305E"}} className="d-flex align-items-center">
       <FontAwesomeIcon icon={faComments} style={{fontStyle: "italic", color:"#1F305E", marginRight:'3px'}} />
         <span style={{fontStyle: "italic", color:"#1F305E"}}>Forum</span>
+    </NavLink>
+  </NavItem>
+)
+
+export const Archive = props => (
+  <NavItem>
+    <NavLink tag={Link} to="/archive" style={{fontStyle: "italic", color:"#1F305E"}} className="d-flex align-items-center">
+      <FontAwesomeIcon icon={faUpload} style={{fontStyle: "italic", color:"#1F305E", marginRight:'3px'}} />
+        <span style={{fontStyle: "italic", color:"#1F305E"}}>Archive</span>
     </NavLink>
   </NavItem>
 )
