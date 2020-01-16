@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import Card from '@material-ui/core/Card';
-import { CardContent } from '@material-ui/core';
+import { CardContent, Icon } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
-import { Popup } from "./Popup";
 
 export class Questions extends Component<any, any>{
     intervals = [];
@@ -16,8 +15,7 @@ export class Questions extends Component<any, any>{
             questionText: "",
             redirect: false,
             highlightedQuestion: "",
-            userID: 0,
-            open: false
+            userID: 0
         }
     }
     
@@ -121,47 +119,34 @@ export class Questions extends Component<any, any>{
     }
 
     askQuestion = () =>{
-        if(this.state.questionText === ""){
-            this.setState({
-                open: true
+        const newTags = []
+        this.props.semester !== "" ? newTags.push(this.props.semester) : null;
+        this.props.specialization !== "" ? newTags.push(this.props.specialization) : null;
+        this.props.language !== "" ? newTags.push(this.props.language) : null;
+        this.props.tags !== "" ? new Set(this.props.tags.split(",")).forEach(item => {
+                                                if(item !== "")
+                                                newTags.push(item); }) : null
+        
+        fetch('http://localhost:8080/ourApi/question', {
+            method:'POST',
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                text: this.state.questionText,
+                idUser: this.state.userID,
+                tags: newTags,
             })
-        }
-        else{
-            const newTags = []
-            this.props.semester !== "" ? newTags.push(this.props.semester) : null;
-            this.props.specialization !== "" ? newTags.push(this.props.specialization) : null;
-            this.props.language !== "" ? newTags.push(this.props.language) : null;
-            this.props.tags !== "" ? new Set(this.props.tags.split(",")).forEach(item => {
-                                                    if(item !== "")
-                                                    newTags.push(item); }) : null
-            
-            fetch('http://localhost:8080/ourApi/question', {
-                method:'POST',
-                headers:{
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    text: this.state.questionText,
-                    idUser: this.state.userID,
-                    tags: newTags,
-                })
-            }).catch((error) => {console.log(error)})
-            this.setState({
-                questionText: ""
-            })
-        }
+        }).catch((error) => {console.log(error)})
+        this.setState({
+            questionText: ""
+        })
     }
 
     handleQuestionText = (event) => {
         this.setState({
             questionText: event.target.value
-        })
-    }
-
-    handleClose = () => {
-        this.setState({
-            open: false
         })
     }
 
@@ -183,13 +168,7 @@ export class Questions extends Component<any, any>{
     render(){
         return(
             <div>
-
-            {this.state.open ? <Popup title={"Try asking a real question"} 
-                                            content={"You have to do a lot better than that if you want to ask something"} 
-                                            button={"My bad..."} popup={this.handleClose}></Popup> : null}          
-            
             {this.state.redirect ?  <Redirect push to={{ pathname:'/topic', state:{ from : this.state.highlightedQuestion} }} /> : null}
-            
             <div style={{height:"52vh", width:"85%", marginTop:"2%", marginLeft:"3%", border:"1px solid #F8F8FF", boxShadow:"0px 0px 1px black", overflow: 'auto'}}>
                 <h5 style={{marginTop: "2%", marginLeft:"3%", fontWeight: "bold", color:"#1F305E", fontStyle: "italic", textShadow: "2px 2px #DCDCDC"}}>
                             You searched for {this.createText()} 

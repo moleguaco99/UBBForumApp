@@ -24,11 +24,16 @@ export const Home = (props: IHomeProp) => {
         ) : (
           <div>
             <Alert style={{backgroundColor: "#1F305E", color:"#E0FBFC"}}>
+              If you want to
               <Link to="/login" style={{color:"#E0FBFC"}} className="alert-link">
                 {' '}
-                Sign In
+                sign in
               </Link>
+              , you can try the default accounts:
+              <br />- Administrator (login=&quot;admin&quot; and password=&quot;admin&quot;)
+              <br />- User (login=&quot;user&quot; and password=&quot;user&quot;).
             </Alert>
+
             <Alert style={{backgroundColor: "#1F305E", color: "#E0FBFC"}}>
               You do not have an account yet?&nbsp;
               <Link to="/account/register" style={{color: "#E0FBFC"}} className="alert-link">

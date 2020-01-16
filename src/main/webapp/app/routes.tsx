@@ -18,7 +18,6 @@ import Loadable from 'react-loadable';
 import { Switch } from 'react-router-dom';
 import SubjectPage from './modules/subject/subjectPage';
 import SubjectSearch from './modules/subject/subjectSearch/subjectSearch';
-import { ArchivePage } from './components/archive/ArchivePage';
 
 const Account = Loadable({
   loader: () => import(/* webpackChunkName: "account" */ 'app/modules/account'),
@@ -48,7 +47,6 @@ const Routes = () => (
       <ErrorBoundaryRoute path="/subject/:id?" component={SubjectPage} />
       <ErrorBoundaryRoute path="/forum" component={ForumPage} />
       <ErrorBoundaryRoute path="/topic" component={TopicPage} />
-      <ErrorBoundaryRoute path="/archive" component={ArchivePage} />
       <ErrorBoundaryRoute component={PageNotFound} />
     </Switch>
   </div>
