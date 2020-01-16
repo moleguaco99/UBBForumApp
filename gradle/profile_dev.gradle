@@ -8,6 +8,8 @@ configurations {
 dependencies {
     developmentOnly "org.springframework.boot:spring-boot-devtools"
     implementation "com.h2database:h2"
+    compile group: 'javax.interceptor', name: 'javax.interceptor-api', version: '1.2'
+
 }
 
 def profiles = "dev"
@@ -59,5 +61,4 @@ processResources {
     }
 }
 
-processResources.dependsOn webpack
 bootJar.dependsOn processResources

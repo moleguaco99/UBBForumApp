@@ -73,11 +73,11 @@ export default (state: SubjectState = initialState, action): SubjectState => {
 };
 export const fetchSubject = id => ({
   type: ACTION_TYPES.FETCH_SUBJECT,
-  payload: axios.get('ourApi/subjects/' + id)
+  payload: axios.get('http://localhost:8080/ourApi/subjects/' + id)
 });
 export const fetchSubjectTeachers = id => ({
   type: ACTION_TYPES.FETCH_SUBJECT_TEACHERS,
-  payload: axios.get('ourApi/subjects/' + id + '/teachers')
+  payload: axios.get('http://localhost:8080/ourApi/subjects/' + id + '/teachers')
 });
 export const setOffset = (event, offset) => ({
   type: ACTION_TYPES.SET_OFFSET,

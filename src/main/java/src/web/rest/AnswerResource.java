@@ -3,13 +3,16 @@ package src.web.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import src.domain.Answer;
 import src.domain.VoteAnswer;
 import src.repository.UserRepository;
 import src.repository.VoteAnswerRepository;
+import src.security.AuthoritiesConstants;
 import src.service.AnswerService;
 import src.service.MailService;
+import src.service.UserService;
 import src.service.VoteAnswerService;
 import src.service.dto.AnswerDTO;
 
@@ -35,6 +38,8 @@ public class AnswerResource {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserService userService;
     @Autowired
     private VoteAnswerService voteAnswerService;
 
@@ -70,8 +75,8 @@ public class AnswerResource {
     @PostMapping("/vote")
     @Transactional
     public ResponseEntity update(@RequestBody Map<String, Object> answerRatingMap) {
-        Map<String, Object> map = (Map<String, Object>) answerRatingMap.get("answerRatingMap");
 
+        Map<String, Object> map = (Map<String, Object>) answerRatingMap.get("answerRatingMap");
         Integer id = (Integer) map.get("idAnswer");
         Integer idUser = (Integer) map.get("idUser");
         Integer vote = (Integer) map.get("vote");

@@ -169,7 +169,7 @@ export const changeSection = section => ({
 });
 export const fetchSubjects = () => ({
   type: ACTION_TYPES.FETCH_SUBJECTS,
-  payload: axios.get('ourApi/subjects')
+  payload: axios.get('http://localhost:8080/ourApi/subjects')
 });
 export const showModal = () => ({
   type: ACTION_TYPES.SHOW_MODAL

@@ -17,7 +17,7 @@ export const TeacherCard = ({teacher}: ITeacherCardProps) => {
     <Card className="card">
       <Row>
         <Col md={3}>
-          <div><img width={150} height={150} src={"ourApi/teachers/photo/" + teacher.photoPath}/></div>
+          <div><img width={150} height={150} src={"http://localhost:8080/ourApi/teachers/photo/" + teacher.photoPath}/></div>
         </Col>
         <Col md={9}>
           <div>

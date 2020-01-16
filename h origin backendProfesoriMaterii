@@ -1,0 +1,339 @@
+[33mcommit 0605b2c3826d9447d2ee2005fc022d275d69e717[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Merge: 5c61169 7b3c9c0
+Author: Iustin <ventaniuciustin@gmail.com>
+Date:   Wed Jan 8 21:35:40 2020 +0200
+
+    Merge branch 'backendProfesoriMaterii' of https://github.com/moleguaco99/UBBForumApp
+
+[33mcommit 5c61169a3702b0aecb7f366da5d2b0297f0720ff[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mbackendProfesoriMaterii[m[33m)[m
+Merge: 273656d 79ccbce
+Author: VentaniucIustin <34058115+VentaniucIustin@users.noreply.github.com>
+Date:   Wed Jan 8 19:30:15 2020 +0200
+
+    Merge pull request #10 from moleguaco99/subjectPage
+    
+    Added rest method to retrieve teacher photo from server
+
+[33mcommit 79ccbcec762b0bb30655bf12f822adbe93aea51d[m[33m ([m[1;31morigin/subjectPage[m[33m, [m[1;32msubjectPage[m[33m)[m
+Author: Iustin <ventaniuciustin@gmail.com>
+Date:   Wed Jan 8 19:29:10 2020 +0200
+
+    Added rest method to retrieve teacher photo from server
+
+[33mcommit 273656df564fe3e90a5a4b1d0007d6b7bb6527ed[m
+Merge: 532af48 5c49713
+Author: VentaniucIustin <34058115+VentaniucIustin@users.noreply.github.com>
+Date:   Wed Jan 8 13:49:34 2020 +0200
+
+    Merge pull request #9 from moleguaco99/subjectPage
+    
+    Added component for subject search. Minor changes to subject page.
+
+[33mcommit 532af487cfeeca15924536836169ef838ed9eef3[m
+Merge: 65bba7d 0bbfaf0
+Author: VentaniucIustin <34058115+VentaniucIustin@users.noreply.github.com>
+Date:   Wed Jan 8 13:48:30 2020 +0200
+
+    Merge pull request #7 from moleguaco99/subjectPage
+    
+    Implemented subject page.
+
+[33mcommit 5c4971377bd957461045b55d5da77f7958d7f9ab[m
+Author: Iustin <ventaniuciustin@gmail.com>
+Date:   Wed Jan 8 13:46:53 2020 +0200
+
+    Added component for subject search. Minor changes to subject page.
+
+[33mcommit 0bbfaf099ff9d0ed422f311f3914c20c2c833bd6[m
+Author: Iustin <ventaniuciustin@gmail.com>
+Date:   Tue Jan 7 21:01:18 2020 +0200
+
+    Implemented subject page.
+
+[33mcommit 65bba7d4479525d73b6982ab4e6adf9b7ceaa7e8[m
+Author: tamAdrian <t.adrian1998@gmail.com>
+Date:   Mon Jan 6 14:20:46 2020 +0200
+
+    Added registration email activation
+
+[33mcommit f6cd8f989c2b32373b4600ea2e33b8415620a1ff[m[33m ([m[1;32mtoolbar[m[33m)[m
+Author: CiprianT <tei_cip@yahoo.com>
+Date:   Fri Dec 13 13:24:14 2019 +0200
+
+    first good version of teacher page
+
+[33mcommit fdda6b039aa6cc1026059239ba91dac73ca4b80c[m
+Merge: 3f7cd97 ffa1917
+Author: Dragos Serban <49645354+moleguaco99@users.noreply.github.com>
+Date:   Fri Dec 13 11:00:38 2019 +0200
+
+    Merge pull request #6 from moleguaco99/first_page_editing
+    
+    First page editing + many other stuff
+
+[33mcommit ffa1917effe9bef808c6379030feea9883aa2f9c[m
+Merge: a39b57b 1565d25
+Author: Dragos Serban <49645354+moleguaco99@users.noreply.github.com>
+Date:   Fri Dec 13 10:58:49 2019 +0200
+
+    Merge branch 'first_page_editing' of https://github.com/moleguaco99/UBBForumApp into first_page_editing
+
+[33mcommit a39b57bfa23de7e73c0a556164245e4b3121d379[m
+Author: Dragos Serban <49645354+moleguaco99@users.noreply.github.com>
+Date:   Fri Dec 13 10:58:39 2019 +0200
+
+    Added forum link and icon
+    
+    -multa munca
+
+[33mcommit 7b3c9c0365ff4a8979dca1f12d3092d9451be506[m[33m ([m[1;31morigin/backendProfesoriMaterii[m[33m)[m
+Author: adrian-trinc <adriantrinc2014@gmail.com>
+Date:   Thu Dec 12 22:21:52 2019 +0200
+
+    Modified Subject Resource and Teacher Resourcegit
+
+[33mcommit 57e6dee7d33d3fcfa8f2f4633c6511b02c2e385f[m
+Author: adrian-trinc <adriantrinc2014@gmail.com>
+Date:   Thu Dec 12 21:59:41 2019 +0200
+
+    Modified Subject Resource
+
+[33mcommit 1565d25578e5f13021f6bdaab7848c607e911456[m
+Merge: 696eeea 16b00ed
+Author: CiprianT <tei_cip@yahoo.com>
+Date:   Thu Dec 12 19:06:15 2019 +0200
+
+    Merge branch 'first_page_editing' of https://github.com/moleguaco99/UBBForumApp into first_page_editing
+
+[33mcommit 696eeea9c855f368193e3edd065dbd381a010590[m
+Author: CiprianT <tei_cip@yahoo.com>
+Date:   Thu Dec 12 19:05:29 2019 +0200
+
+    props
+
+[33mcommit 16b00eda98627847ba0ce91ebc382bfaa3891e08[m
+Author: Dragos Serban <49645354+moleguaco99@users.noreply.github.com>
+Date:   Thu Dec 12 16:19:48 2019 +0200
+
+    Repsonse to questions
+    
+    -added option to reply to a topic
+
+[33mcommit e4c0a45c0af7109dea6c05527a52a57b5a14cbc2[m
+Merge: 3ab81e6 6bc3306
+Author: Dragos Serban <49645354+moleguaco99@users.noreply.github.com>
+Date:   Wed Dec 11 23:25:48 2019 +0200
+
+    Merge branch 'first_page_editing' of https://github.com/moleguaco99/UBBForumApp into first_page_editing
+
+[33mcommit 3ab81e6b7ffaa729854d62edd516773f9158a497[m
+Author: Dragos Serban <49645354+moleguaco99@users.noreply.github.com>
+Date:   Wed Dec 11 23:25:41 2019 +0200
+
+    Introduced pressed-enter event
+    
+    Now press enter to add questions and replies
+
+[33mcommit 6bc33069b93277b2999a35d5605b072f4c6c8a8c[m
+Author: iuliathira <38749784+iuliathira@users.noreply.github.com>
+Date:   Wed Dec 11 23:19:13 2019 +0200
+
+    CREATE AnswerDTO
+    
+    -function to add a reply/answer to database
+
+[33mcommit 14642c5a1575b43e54a8cbaf22be886fce70e645[m
+Merge: 2246ecf 12f825e
+Author: iuliathira <38749784+iuliathira@users.noreply.github.com>
+Date:   Wed Dec 11 22:29:20 2019 +0200
+
+    Merge branch 'first_page_editing' of https://github.com/moleguaco99/UBBForumApp into first_page_editing
+
+[33mcommit 2246ecf482dfccb0330c3eda9464d072eb29f8af[m
+Author: iuliathira <38749784+iuliathira@users.noreply.github.com>
+Date:   Wed Dec 11 22:28:59 2019 +0200
+
+    Created Answer Service
+    
+    - function getAnswers
+
+[33mcommit 12f825ece924e6ec8bfd2bcfe8c9ec5c18970394[m
+Author: Dragos Serban <49645354+moleguaco99@users.noreply.github.com>
+Date:   Tue Dec 10 19:28:41 2019 +0200
+
+    Completed questions page
+    
+    - about to add responses
+
+[33mcommit b579abc0faa4a25f959e46f208becc973f801da2[m
+Author: Dragos Serban <49645354+moleguaco99@users.noreply.github.com>
+Date:   Sat Dec 7 19:47:35 2019 +0200
+
+    Completion questions page
+    
+    commit before database crash
+
+[33mcommit 15679beed37f81f062742869ac031070ed247892[m
+Author: Dragos Serban <49645354+moleguaco99@users.noreply.github.com>
+Date:   Sat Dec 7 13:44:56 2019 +0200
+
+    State checking for question showing
+    
+    -added interfaces to react.components
+
+[33mcommit 60b1661257fe2a4008ed6a65a79dd782f9097334[m
+Merge: 582fae3 1bcaf28
+Author: Dragos Serban <49645354+moleguaco99@users.noreply.github.com>
+Date:   Sat Dec 7 13:43:32 2019 +0200
+
+    Merge branch 'backendIntrebariRaspunsuri' into first_page_editing
+
+[33mcommit 1bcaf280011fa370f73b69107914fa4b4a2137ac[m
+Author: tamAdrian <t.adrian1998@gmail.com>
+Date:   Fri Dec 6 13:49:24 2019 +0200
+
+    Reformat code
+
+[33mcommit 6b31ab9348826cd41ef61b6d357308294c4a0b9e[m
+Author: tamAdrian <t.adrian1998@gmail.com>
+Date:   Fri Dec 6 13:47:48 2019 +0200
+
+    Added url for question filter
+
+[33mcommit b6fe9b20240a09f23fbafbb0820f123dfd01cadd[m
+Author: tamAdrian <t.adrian1998@gmail.com>
+Date:   Fri Dec 6 13:46:45 2019 +0200
+
+    Find all tagNames for a question
+
+[33mcommit c78d651eeaa69fe1a638b3f8c089c7e84ce26f7e[m
+Author: tamAdrian <t.adrian1998@gmail.com>
+Date:   Fri Dec 6 13:45:19 2019 +0200
+
+    Added method to find all tagQuestions by question
+
+[33mcommit cbee6e5d1b2a3e5d788ac6b8949ac86dc039c5cc[m
+Author: adrian-trinc <adriantrinc2014@gmail.com>
+Date:   Tue Dec 3 20:49:32 2019 +0200
+
+    Added Subject and Teacher Services and Resources
+
+[33mcommit fef96314c7da53144616dfc28d263d6193f9d38d[m
+Author: tamAdrian <t.adrian1998@gmail.com>
+Date:   Tue Dec 3 20:20:35 2019 +0200
+
+    Changed some files
+
+[33mcommit c87a275df7118fd41e6c50b8e26291edd689316a[m
+Author: tamAdrian <t.adrian1998@gmail.com>
+Date:   Tue Dec 3 20:19:37 2019 +0200
+
+    Added dtos
+
+[33mcommit 28ddfa27d0022fb60a02f142ddb9e94ca1006c5e[m
+Author: tamAdrian <t.adrian1998@gmail.com>
+Date:   Tue Dec 3 20:19:01 2019 +0200
+
+    Added repository and service for Tag
+
+[33mcommit ad00fa59ffbdf79a2dc05d3684e4ee8d8d6045d8[m
+Author: tamAdrian <t.adrian1998@gmail.com>
+Date:   Tue Dec 3 20:16:47 2019 +0200
+
+    Added repository, service and resource for Question
+
+[33mcommit 582fae38c796fb49ac680d183d770a3c0b92511e[m
+Author: Dragos Serban <49645354+moleguaco99@users.noreply.github.com>
+Date:   Tue Nov 19 21:45:36 2019 +0200
+
+    first design try
+
+[33mcommit e7b6b281a4a0d117ca17ab9e38c627ad2932f3ea[m
+Author: CiprianT <tei_cip@yahoo.com>
+Date:   Wed Nov 13 19:23:07 2019 +0200
+
+    added readme
+
+[33mcommit 8f887db3328421a7d3db62ad956d91bebd427af0[m
+Author: CiprianT <tei_cip@yahoo.com>
+Date:   Wed Nov 13 19:18:27 2019 +0200
+
+    Teacher page with cards
+
+[33mcommit bda48e4ca102bbea253b8430d6bf48af51ff62c7[m
+Author: tamAdrian <t.adrian1998@gmail.com>
+Date:   Wed Nov 13 19:13:12 2019 +0200
+
+    Added setup method for teacher
+
+[33mcommit 31bd0b417bd9820aed9bcc315075cca3b54babb6[m
+Author: tamAdrian <t.adrian1998@gmail.com>
+Date:   Wed Nov 13 19:08:53 2019 +0200
+
+    Added init database setup for teachers. Run method run() only oncegit status!
+
+[33mcommit 3f7cd97850c57a6c248749b1a31ebe5480b63c40[m
+Merge: c1f80d2 5aee1d3
+Author: tamAdrian <48978753+tamAdrian@users.noreply.github.com>
+Date:   Wed Nov 13 15:18:04 2019 +0200
+
+    Merge pull request #3 from moleguaco99/domainEntity
+    
+    Added domain entities and repositories
+
+[33mcommit 5aee1d3995fbf2f601bcff51a132176521def996[m
+Author: Dragos Serban <49645354+moleguaco99@users.noreply.github.com>
+Date:   Tue Nov 5 17:52:33 2019 +0200
+
+    Added domain entities and repositories
+
+[33mcommit c1f80d2f0a7fca5cab6cd01075b0b23ca798a3c0[m
+Merge: 4d6a0d7 81096f9
+Author: Dragos Serban <49645354+moleguaco99@users.noreply.github.com>
+Date:   Tue Nov 5 10:14:48 2019 +0200
+
+    Merge pull request #2 from moleguaco99/dependabot/npm_and_yarn/swagger-ui-3.23.11
+    
+    Bump swagger-ui from 2.2.10 to 3.23.11
+
+[33mcommit 81096f9b91e0f3601ba65affce99cc8f72a7536a[m
+Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+Date:   Wed Oct 30 08:57:26 2019 +0000
+
+    Bump swagger-ui from 2.2.10 to 3.23.11
+    
+    Bumps [swagger-ui](https://github.com/swagger-api/swagger-ui) from 2.2.10 to 3.23.11.
+    - [Release notes](https://github.com/swagger-api/swagger-ui/releases)
+    - [Commits](https://github.com/swagger-api/swagger-ui/compare/v2.2.10...v3.23.11)
+    
+    Signed-off-by: dependabot[bot] <support@github.com>
+
+[33mcommit 4d6a0d724bfe9f058497142ee6c1dcbcaadc4e23[m
+Merge: c90c8db 79d3f3b
+Author: Dragos Serban <49645354+moleguaco99@users.noreply.github.com>
+Date:   Wed Oct 30 10:55:50 2019 +0200
+
+    Merge pull request #1 from moleguaco99/domainEntity
+    
+    Modifications to database-platform
+
+[33mcommit 79d3f3b09b8d97c6cf2e62ae33d4332b1aef2951[m
+Author: Dragos Serban <49645354+moleguaco99@users.noreply.github.com>
+Date:   Wed Oct 30 10:53:47 2019 +0200
+
+    - created first classes
+    - modified app(-dev).yml to work on all platforms
+
+[33mcommit c90c8db99907733383e2a29dc826ee3ac4d257ad[m
+Author: Dragos Serban <49645354+moleguaco99@users.noreply.github.com>
+Date:   Tue Oct 29 11:55:23 2019 +0200
+
+    First modifications for welcome page
+    
+    - modified ribbon and JHipster Logo
+
+[33mcommit e782837558f501841c3ffa3e953f6a89466d086e[m
+Author: Dragos Serban <49645354+moleguaco99@users.noreply.github.com>
+Date:   Wed Oct 23 12:53:22 2019 +0300
+
+    Initial version of UBBForumApp generated by JHipster-6.4.1

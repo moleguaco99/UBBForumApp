@@ -41,7 +41,7 @@ export const SubjectPage = (props: ISubjectProps) => {
           <CardText>
             <Row md={12}>
               <Col>
-                {props.subject.description}
+                <h4>{props.subject.description}</h4>
               </Col>
               {props.fetchTeachersSuccess ?
                 (<Col>

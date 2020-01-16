@@ -14,7 +14,7 @@ import "./styles.css"
 
 
 export class TopicPage extends React.Component<any, any>{
-    
+
     constructor(props){
         super(props);
         this.state = {
@@ -41,7 +41,7 @@ export class TopicPage extends React.Component<any, any>{
           replies: json
         }))
         .catch(error => console.log(error))
-        
+
         this.setState({
             idInterval: setInterval(this.refreshQuestions, 2000)
         })
@@ -50,7 +50,7 @@ export class TopicPage extends React.Component<any, any>{
         .then(response => response.json())
         .then(json => {
             this.setState({
-                mentionusers: json 
+                mentionusers: json
             })
         })
         .catch(error => console.log(error))
@@ -70,16 +70,16 @@ export class TopicPage extends React.Component<any, any>{
             replyText: event.target.value
         })
     }
-    
+
     getIcon(imageUrl:string, marginL:string, marginT:string){
-        
-        return imageUrl !== null ? 
-            <img src={imageUrl} 
+
+        return imageUrl !== null ?
+            <img src={imageUrl}
                 style={{height:"50px", marginTop: marginT, alignSelf:"center", marginLeft: marginL, borderRadius:"50%" }}></img> :
             <img src="content\images\user-icon.png"
                 style={{height:"50px", marginTop: marginT, alignSelf:"center", marginLeft: marginL, borderRadius:"50%", border:"1px solid #D8D8D8"}}></img>
     }
- 
+
     replyTopic = () => {
 
         if(this.state.replyText === ""){
@@ -103,7 +103,7 @@ export class TopicPage extends React.Component<any, any>{
                  })
                 }).catch(error => console.log(error))
 
-                this.setState({ 
+                this.setState({
                     replyText: ""
             })
         }
@@ -131,7 +131,7 @@ export class TopicPage extends React.Component<any, any>{
     render(){
         return(
             <div style={{overflow:'auto'}}>
-                
+
                 <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
                     <DialogTitle style={{fontSize:"30px", fontWeight:"bolder", color:"black", alignContent:"center"}}>{"Please write an answer!"}</DialogTitle>
                     <DialogContent>
@@ -145,7 +145,7 @@ export class TopicPage extends React.Component<any, any>{
                         </Button>
                     </DialogActions>
                 </Dialog>
-                
+
                 <div style={{display:'flex'}}>
                     {this.getIcon(this.state.topicQuestion.userP.imageUrl, "3%", "3%")}
                     <Card style={{height:"45px", width:"80%", marginLeft:"1%", marginTop:"3%",  textAlign:"justify", display:"flex", backgroundColor:"#59C3C3", boxShadow:"0px 2px 2px #C6DBF0", color:"white"}}>
@@ -154,12 +154,12 @@ export class TopicPage extends React.Component<any, any>{
                         </CardContent>
                     </Card>
                 </div>
-                
+
                 <div>
                     <p style={{marginLeft:"60%", fontStyle:"italic", fontSize:"5", color:"grey"}}> posted by {this.state.topicQuestion.userP.firstName + " " + this.state.topicQuestion.userP.lastName} on {this.parseDate(this.state.topicQuestion.timestamp)} </p>
                     {this.state.replies.map(reply => (
                         <Reply key={reply.idAnswer} replyA={reply} userID={this.state.userID} mentionusers={this.state.mentionusers} color="#0D5C63" textColor="white" />
-                    ))} 
+                    ))}
                 </div>
 
                 <div style={{position:'relative', marginTop:'2%', marginLeft:'5%', width:'85%', display:'flex'}}>

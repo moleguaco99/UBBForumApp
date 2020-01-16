@@ -28,14 +28,14 @@ export class Reply extends React.Component<any, any>{
     }
 
     componentDidMount(){
-        
+
         /* eslint-disable no-console */
         fetch("http://localhost:8080/ourApi/isvoted", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            },  
+            },
             body: JSON.stringify({
                 answerVotedMap: {
                     idAnswer: this.props.replyA.idAnswer,
@@ -90,7 +90,7 @@ export class Reply extends React.Component<any, any>{
                     disable: true
                 }
             })
-        
+
         fetch("http://localhost:8080/ourApi/vote/", {
             method:'POST',
             headers: {
@@ -132,10 +132,10 @@ export class Reply extends React.Component<any, any>{
         if(!event.target.value.includes("@")){
             this.setState({
                 mention: false
-            })  
+            })
         }
     }
-    
+
     replyTopic = () => {
 
         fetch('http://localhost:8080/ourApi/answer/', {
@@ -152,7 +152,7 @@ export class Reply extends React.Component<any, any>{
                 type: 'A'
              })
             }).catch(error => console.log(error))
-            
+
             const usersList = this.state.notifyUsers.split(";");
             const taggedUsers = [];
 
@@ -160,24 +160,24 @@ export class Reply extends React.Component<any, any>{
                 if(this.state.replyText.includes(element) && element !== "")
                     taggedUsers.push(element);
             });
-            
+
             fetch('http://localhost:8080/ourApi/tagusers/', {
                 method: 'POST',
                 headers:{
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ 
+                body: JSON.stringify({
                     users: taggedUsers })
             }).catch(error => console.log(error))
 
-            this.setState({ 
+            this.setState({
                 replyText: "",
                 answerForm: false,
                 notifyUsers: ""
             })
     }
-    
+
 
     triggerMention = (event : React.KeyboardEvent<HTMLInputElement>) => {
 
@@ -202,9 +202,9 @@ export class Reply extends React.Component<any, any>{
     }
 
     getIcon(imageUrl:string, marginL:string, marginT:string){
-        
-        return imageUrl !== null ? 
-           <img src={imageUrl} 
+
+        return imageUrl !== null ?
+           <img src={imageUrl}
                style={{height:"50px", marginTop: marginT, alignSelf:"center", marginLeft: marginL, borderRadius:"50%"}}></img> :
            <img src="content\images\user-icon.png"
                style={{height:"50px", marginTop: marginT, alignSelf:"center", marginLeft: marginL, borderRadius:"50%", border:"1px solid #D8D8D8"}}></img>
@@ -221,7 +221,7 @@ export class Reply extends React.Component<any, any>{
 
     render(){
         return(
-            <div>              
+            <div>
                 <div style={{display:"flex", marginLeft:"10%"}}>
                     <Card onClick={this.toggleAnswerForm}
                         style={{height:"45px", width:"80%", marginTop:"1%", marginLeft:"1%", textAlign:"end", backgroundColor:this.props.color, boxShadow:"0px 2px 2px #C6DBF0", color:this.props.textColor}}>
@@ -234,24 +234,24 @@ export class Reply extends React.Component<any, any>{
 
                 <div style={{display:"flex"}}>
                     <p style={{marginLeft:"16%", fontStyle:"italic", fontSize:"5", color:"grey"}}> posted by {this.props.replyA.userP.firstName + " " + this.props.replyA.userP.lastName} on {this.parseDate(this.props.replyA.timestamp)}  &nbsp; &nbsp; {this.props.replyA.rating} </p>
-                    
+
                     <div style={{marginLeft:"0.5%"}} onClick={this.toggleVote}>
                         <FontAwesomeIcon style={this.state.voted ? {fontStyle: "italic", color:"#1F75FE"} : {fontStyle: "italic", color:"grey"} } icon={faThumbsUp} />
-                    </div> 
+                    </div>
                 </div>
-                
-                {this.state.answerForm ?       
-                    <div style={{marginLeft:"36%"}}> 
+
+                {this.state.answerForm ?
+                    <div style={{marginLeft:"36%"}}>
                         <div style={{display:"flex"}}>
                             <TextField style={{width:"73%", marginBottom:"1%"}}
-                                    label="Reply to answer" variant="outlined" onChange={this.handleReplyText} 
+                                    label="Reply to answer" variant="outlined" onChange={this.handleReplyText}
                                         onKeyUp={this.pressEnter} onKeyPress={this.triggerMention} value={this.state.replyText} />
                         <div style={{marginLeft:"2%", marginTop:"1%", marginBottom:"1%"}} onClick={this.replyTopic}>
                             <FontAwesomeIcon style={{ color:"#191970"}} size="2x" icon={ faReply } />
                         </div>
                     </div>
-                        
-                    {this.state.mention ? 
+
+                    {this.state.mention ?
                         <List style={{ position: "absolute", backgroundColor: "white", zIndex:5 }}>
                             {this.props.mentionusers.map(user=>(
                                     <ListItem key={user.idUser} className="mentionuser" onClick={() => this.mention(user.firstName + " " + user.lastName)}>
@@ -262,17 +262,17 @@ export class Reply extends React.Component<any, any>{
                                     </ListItem>
                             ))}
                         </List> : null}
-                    </div> : null 
+                    </div> : null
                 }
 
                 <div style={{width:"90%", marginLeft:"8%"}}>
                     {this.state.replies.map(reply => (
-                                <Reply key={reply.idAnswer} replyA={reply} userID={this.props.userID} 
+                                <Reply key={reply.idAnswer} replyA={reply} userID={this.props.userID}
                                         mentionusers={this.props.mentionusers} color="#360568" textColor="white"/>
                     ))}
                 </div>
 
-            </div> 
+            </div>
         )
     }
 }
