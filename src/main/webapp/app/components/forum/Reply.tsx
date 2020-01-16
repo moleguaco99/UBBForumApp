@@ -10,8 +10,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
-import "./styles.css";
-import { Popup } from "./Popup";
+import "./styles.css"
 
 export class Reply extends React.Component<any, any>{
     constructor(props){
@@ -24,8 +23,7 @@ export class Reply extends React.Component<any, any>{
             mention: false,
             idInterval: 0,
             notifyUsers: "",
-            disable: false,
-            open: false
+            disable: false
         }
     }
 
@@ -65,7 +63,7 @@ export class Reply extends React.Component<any, any>{
             .catch(error => console.log(error))
 
             this.setState({
-                idInterval: setInterval(this.refreshReplies, 3000)
+                idInterval: setInterval(this.refreshReplies, 2000)
             })
         }
     }
@@ -109,7 +107,7 @@ export class Reply extends React.Component<any, any>{
         }).catch(error => {console.log(error)})
 
         setTimeout(()=>{ this.setState({
-                            disable:false })}, 3000)
+                            disable:false })}, 2000)
     }
 }
 
@@ -139,53 +137,48 @@ export class Reply extends React.Component<any, any>{
     }
     
     replyTopic = () => {
-        if(this.state.replyText === ""){
-            this.setState({
-                open: true
-            })
-        }
-        else{
-            fetch('http://localhost:8080/ourApi/answer/', {
+
+        fetch('http://localhost:8080/ourApi/answer/', {
+            method: 'POST',
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                idUser: this.props.userID,
+                idQA: this.props.replyA.idAnswer,
+                rating: 0,
+                text: this.state.replyText,
+                type: 'A'
+             })
+            }).catch(error => console.log(error))
+            
+            const usersList = this.state.notifyUsers.split(";");
+            const taggedUsers = [];
+
+            usersList.forEach(element => {
+                if(this.state.replyText.includes(element) && element !== "")
+                    taggedUsers.push(element);
+            });
+            
+            fetch('http://localhost:8080/ourApi/tagusers/', {
                 method: 'POST',
                 headers:{
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    idUser: this.props.userID,
-                    idQA: this.props.replyA.idAnswer,
-                    rating: 0,
-                    text: this.state.replyText,
-                    type: 'A'
-                })
-                }).catch(error => console.log(error))
-                
-                const usersList = this.state.notifyUsers.split(";");
-                const taggedUsers = [];
+                body: JSON.stringify({ 
+                    users: taggedUsers })
+            }).catch(error => console.log(error))
 
-                usersList.forEach(element => {
-                    if(this.state.replyText.includes(element) && element !== "")
-                        taggedUsers.push(element);
-                });
-                
-                fetch('http://localhost:8080/ourApi/tagusers/', {
-                    method: 'POST',
-                    headers:{
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ 
-                        users: taggedUsers })
-                }).catch(error => console.log(error))
-
-                this.setState({ 
-                    replyText: "",
-                    answerForm: false,
-                    notifyUsers: ""
-                })
-        }
+            this.setState({ 
+                replyText: "",
+                answerForm: false,
+                notifyUsers: ""
+            })
     }
     
+
     triggerMention = (event : React.KeyboardEvent<HTMLInputElement>) => {
 
         if(event.key === "@"){
@@ -222,12 +215,6 @@ export class Reply extends React.Component<any, any>{
         return newDate[0] + " " + newDate[1].split(".")[0];
     }
 
-    handleClose = () => {
-        this.setState({
-            open: false
-        })
-    }
-
     componentWillUnmount(){
         clearInterval(this.state.idInterval);
     }
@@ -235,11 +222,6 @@ export class Reply extends React.Component<any, any>{
     render(){
         return(
             <div>              
-
-                {this.state.open ? <Popup title={"Try giving a good reply"} 
-                                            content={"Would you be so kind to actually write something? Your friends need relevant information"} 
-                                            button={"My bad..."} popup={this.handleClose}></Popup> : null}          
-            
                 <div style={{display:"flex", marginLeft:"10%"}}>
                     <Card onClick={this.toggleAnswerForm}
                         style={{height:"45px", width:"80%", marginTop:"1%", marginLeft:"1%", textAlign:"end", backgroundColor:this.props.color, boxShadow:"0px 2px 2px #C6DBF0", color:this.props.textColor}}>
@@ -270,7 +252,7 @@ export class Reply extends React.Component<any, any>{
                     </div>
                         
                     {this.state.mention ? 
-                        <List style={{ position: "absolute", backgroundColor: "white", zIndex:5, width:"15%" }}  dense={true}>
+                        <List style={{ position: "absolute", backgroundColor: "white", zIndex:5 }}>
                             {this.props.mentionusers.map(user=>(
                                     <ListItem key={user.idUser} className="mentionuser" onClick={() => this.mention(user.firstName + " " + user.lastName)}>
                                         <ListItemAvatar>

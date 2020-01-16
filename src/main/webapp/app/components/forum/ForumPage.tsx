@@ -123,7 +123,7 @@ export class ForumPage extends Component<any, ForumState>{
     render() {
         return(
         <div>
-            <h2 style={{marginTop: "1%", fontWeight: "bold", color:"#1F305E", fontStyle: "italic", textShadow: "2px 2px #DCDCDC"}}>Welcome to our questions page!</h2>
+            <h2 style={{marginTop: "2%", fontWeight: "bold", color:"#1F305E", fontStyle: "italic", textShadow: "2px 2px #DCDCDC"}}>Welcome to our questions page!</h2>
             <div style={{display:"flex", marginLeft:"3%"}}>
                 <div>
                     <TextField id="standard-select-currency" select

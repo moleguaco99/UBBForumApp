@@ -1,25 +1,24 @@
-import React from 'react';
-import { Switch } from 'react-router-dom';
-import Loadable from 'react-loadable';
-
-import Login from 'app/modules/login/login';
-import Register from 'app/modules/account/register/register';
-import Activate from 'app/modules/account/activate/activate';
-import PasswordResetInit from 'app/modules/account/password-reset/init/password-reset-init';
-import PasswordResetFinish from 'app/modules/account/password-reset/finish/password-reset-finish';
-import Logout from 'app/modules/login/logout';
-import Home from 'app/modules/home/home';
+import { ForumPage } from 'app/components/forum/ForumPage';
+import { TopicPage } from 'app/components/forum/TopicPage';
+import { TeachersPage } from 'app/components/teachers/TeachersPage';
+import { AUTHORITIES } from 'app/config/constants';
 import Entities from 'app/entities';
+import Activate from 'app/modules/account/activate/activate';
+import PasswordResetFinish from 'app/modules/account/password-reset/finish/password-reset-finish';
+import PasswordResetInit from 'app/modules/account/password-reset/init/password-reset-init';
+import Register from 'app/modules/account/register/register';
+import Home from 'app/modules/home/home';
+import Login from 'app/modules/login/login';
+import Logout from 'app/modules/login/logout';
 import PrivateRoute from 'app/shared/auth/private-route';
 import ErrorBoundaryRoute from 'app/shared/error/error-boundary-route';
 import PageNotFound from 'app/shared/error/page-not-found';
-import { AUTHORITIES } from 'app/config/constants';
-import {TeachersPage} from "app/components/teachers/TeachersPage";
-import {ForumPage} from "app/components/forum/ForumPage";
-import {TopicPage} from "app/components/forum/TopicPage"
-import SubjectPage from "./modules/subject/subjectPage";
-import SubjectSearch from "./modules/subject/subjectSearch/subjectSearch"
-import { ArchivePage } from './components/archive/ArchivePage';
+import React from 'react';
+import Loadable from 'react-loadable';
+import { Switch } from 'react-router-dom';
+import SubjectPage from './modules/subject/subjectPage';
+import SubjectSearch from './modules/subject/subjectSearch/subjectSearch';
+
 const Account = Loadable({
   loader: () => import(/* webpackChunkName: "account" */ 'app/modules/account'),
   loading: () => <div>loading ...</div>
@@ -48,7 +47,6 @@ const Routes = () => (
       <ErrorBoundaryRoute path="/subject/:id?" component={SubjectPage} />
       <ErrorBoundaryRoute path="/forum" component={ForumPage} />
       <ErrorBoundaryRoute path="/topic" component={TopicPage} />
-      <ErrorBoundaryRoute path="/archive" component={ArchivePage} />
       <ErrorBoundaryRoute component={PageNotFound} />
     </Switch>
   </div>
