@@ -51,7 +51,6 @@ public class TeacherResource {
     }
 
     @GetMapping("/teacher/{idT}/subjects")
-    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.USER + "\")")
     public ResponseEntity<List<Subject>> findAllSubjects(@PathVariable("idT") Long idTeacher) {
         try {
             List<Subject> subjects = teacherService.findAllSubjectsForTeacher(idTeacher);

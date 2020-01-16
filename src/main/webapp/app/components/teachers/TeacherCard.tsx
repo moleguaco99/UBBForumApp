@@ -78,3 +78,4 @@ export class TeacherCard extends React.Component<IOwnProps> {
     );
   }
 }
+
