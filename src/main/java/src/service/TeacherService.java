@@ -9,6 +9,7 @@ import src.domain.Teacher;
 import src.repository.SubjectTeacherRepository;
 import src.repository.TeacherRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,6 +23,15 @@ public class TeacherService {
 
     @Autowired
     private SubjectTeacherRepository subjectTeacherRepository;
+
+    public List<Teacher> saveAll(List<Teacher> teacherListReceived) {
+        List<Teacher> teacherList = new ArrayList<>();
+        teacherListReceived.forEach(teacher -> {
+            Teacher teacherSaved = teacherRepository.saveAndFlush(teacher);
+            teacherList.add(teacherSaved);
+        });
+        return teacherList;
+    }
 
     public List<Teacher> findAll() {
         return teacherRepository.findAll();
@@ -40,5 +50,25 @@ public class TeacherService {
         } else {
             throw new RuntimeException("No existent teacher for given id.");
         }
+    }
+
+    public Optional<Teacher> findByFirstName(String firstName) {
+        return teacherRepository.findByFirstName(firstName);
+    }
+
+    public Optional<Teacher> findByLastName(String lastName) {
+        return teacherRepository.findByLastName(lastName);
+    }
+
+    public Optional<Teacher> findByEmail(String email) {
+        return teacherRepository.findByEmail(email);
+    }
+
+    public Optional<Teacher> findByFirstNameAndLastName(String firstName, String lastName) {
+        return teacherRepository.findByFirstNameAndLastName(firstName, lastName);
+    }
+
+    public Optional<Teacher> findByFirstNameAndLastNameAndEmail(String firstName, String lastName, String email) {
+        return teacherRepository.findByFirstNameAndLastNameAndEmail(firstName, lastName, email);
     }
 }

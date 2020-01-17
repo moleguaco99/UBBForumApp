@@ -115,12 +115,14 @@ public class QuestionResource {
             Question question3 = create3();
             Question question4 = create4();
             Question question5 = create5();
+            Question question6 = create6();
 
             Question question1Returned = questionService.saveAndReturn(question1);
             Question question2Returned = questionService.saveAndReturn(question2);
             Question question3Returned = questionService.saveAndReturn(question3);
             Question question4Returned = questionService.saveAndReturn(question4);
             Question question5Returned = questionService.saveAndReturn(question5);
+            Question question6Returned = questionService.saveAndReturn(question6);
 
             List<TagQuestion> tagQuestionListReturned = tagQuestionService.saveAll(this.tagQuestionList);
 
@@ -140,6 +142,9 @@ public class QuestionResource {
             Set<TagQuestion> tagQuestionSet5 = new HashSet<>();
             tagQuestionSet5.add(tagQuestionListReturned.get(5));
             question5Returned.setTagQuestionSet(tagQuestionSet5);
+            Set<TagQuestion> tagQuestionSet6 = new HashSet<>();
+            tagQuestionSet6.add(tagQuestionListReturned.get(6));
+            question6Returned.setTagQuestionSet(tagQuestionSet6);
 
             List<QuestionDTOMoreInfo> questionDTOMoreInfoList = new ArrayList<>();
             questionDTOMoreInfoList.add(questionMapper.questionToQuestionDTOMoreInfo(question1Returned));
@@ -147,6 +152,7 @@ public class QuestionResource {
             questionDTOMoreInfoList.add(questionMapper.questionToQuestionDTOMoreInfo(question3Returned));
             questionDTOMoreInfoList.add(questionMapper.questionToQuestionDTOMoreInfo(question4Returned));
             questionDTOMoreInfoList.add(questionMapper.questionToQuestionDTOMoreInfo(question5Returned));
+            questionDTOMoreInfoList.add(questionMapper.questionToQuestionDTOMoreInfo(question6Returned));
             return new ResponseEntity<>(questionDTOMoreInfoList, HttpStatus.CREATED);
         } catch (RuntimeException e) {
             e.printStackTrace();
@@ -208,11 +214,11 @@ public class QuestionResource {
         Question question3 = new Question();
         question3.setTimestamp(Instant.now());
         question3.setText("Cunoasteti niste resurse si tutoriale pentru proiectele de la materia Programare pentru dispozitive mobile?");
-        Optional<User> optionalUser2 = userRepository.findById((long) 1601);
+        Optional<User> optionalUser2 = userRepository.findOneByLogin("fred");
         if (optionalUser2.isPresent()) {
             question3.setUserP(optionalUser2.get());
         } else {
-            throw new RuntimeException("There is no user with id: ".concat(String.valueOf(1601)));
+            throw new RuntimeException("There is no user with login: ".concat("fred"));
         }
         TagQuestion tagQuestion3s1 = new TagQuestion();
         tagQuestion3s1.setQuestion(question3);
@@ -261,11 +267,11 @@ public class QuestionResource {
         question5.setTimestamp(Instant.now());
         question5.setText("Exista in React Native vreun mecanism in asa fel incat sa stochez informatii" +
             " despre starea aplicatiei si la schimbarea acestora sa se reactualizeze componentele grafice?");
-        Optional<User> optionalUser3 = userRepository.findById((long) 1701);
+        Optional<User> optionalUser3 = userRepository.findOneByLogin("janette");
         if (optionalUser3.isPresent()) {
             question5.setUserP(optionalUser3.get());
         } else {
-            throw new RuntimeException("There is no user with id: ".concat(String.valueOf(1701)));
+            throw new RuntimeException("There is no user with login: ".concat("janette"));
         }
         question5.setUserP(optionalUser3.get());
         TagQuestion tagQuestion5 = new TagQuestion();
@@ -279,5 +285,29 @@ public class QuestionResource {
         tagQuestionList.add(tagQuestion5);
 
         return question5;
+    }
+
+    private Question create6() {
+        Question question6 = new Question();
+        question6.setTimestamp(Instant.now());
+        question6.setText("Cum pot sa rulez aplicatia scrisa in React Native pe telefonul mobil?");
+        Optional<User> optionalUser4 = userRepository.findOneByLogin("julie");
+        if (optionalUser4.isPresent()) {
+            question6.setUserP(optionalUser4.get());
+        } else {
+            throw new RuntimeException("There is no user with login: ".concat("julie"));
+        }
+        question6.setUserP(optionalUser4.get());
+        TagQuestion tagQuestion6 = new TagQuestion();
+        tagQuestion6.setQuestion(question6);
+        if (optionalTagList.get(2).isPresent()) {
+            tagQuestion6.setTag(optionalTagList.get(2).get());
+        }
+        question6.setTagQuestionSet(new HashSet<>());
+
+        optionalUserList.add(optionalUser4);
+        tagQuestionList.add(tagQuestion6);
+
+        return question6;
     }
 }

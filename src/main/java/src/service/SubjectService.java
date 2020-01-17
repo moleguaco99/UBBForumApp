@@ -37,6 +37,10 @@ public class SubjectService {
         return subjectList;
     }
 
+    public Optional<Subject> findByTitleAndSemesterAndSectionAndLanguage(String title, Integer semester, String section, String language) {
+        return subjectRepository.findByTitleAndSemesterAndSectionAndLanguage(title, semester, section, language);
+    }
+
     public Optional<Subject> getSubject(long id) {
         return subjectRepository.findById(id);
     }
