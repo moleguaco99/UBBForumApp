@@ -32,7 +32,9 @@ const tags = [
     { value:"c++" },
     { value:"assembly" },
     { value:"observer" },
-    { value: "abc" }
+    { value: "react_native" },
+    { value: "python" },
+    { value: "kotlin" },
 ]
 
 interface ForumState {
